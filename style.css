@@ -17,3 +17,10 @@ img {
 	left: 50%;
 	transform: translate(-50%,-50%);
 }
+
+#bDiapo, #fleched, #flecheg {
+	border: 1px solid white;
+	padding: 5px 5px 5px 5px;
+	background-color: red;
+	color: white;
+}

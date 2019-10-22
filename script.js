@@ -1,3 +1,5 @@
+// Fonction Diapo
+
 let i = 0;
 
 let images = ["img1.jpg", "img2.jpg", "img3.jpg"];
@@ -14,7 +16,21 @@ function changeImg() {
 		i = 0;
 	}
 
-	setTimeout("changeImg()", temps); 
 }
 
+	let interval = setInterval("changeImg()", temps); 
+
+
 window.onload = changeImg; 
+
+// Bouton Pause
+
+let bPause = document.getElementById("bDiapo");
+
+function pause() {
+	clearInterval(interval);
+	bPause.innerHTML = "";
+	bPause.textContent = "Jouer";
+};
+
+bPause.addEventListener("click" , pause);
