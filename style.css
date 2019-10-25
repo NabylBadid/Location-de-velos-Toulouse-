@@ -18,7 +18,7 @@ img {
 	transform: translate(-50%,-50%);
 }
 
-#bDiapo, #fleched, #flecheg {
+#bDiapo, #flecheD, #flecheG {
 	border: 1px solid white;
 	padding: 5px 5px 5px 5px;
 	background-color: red;
