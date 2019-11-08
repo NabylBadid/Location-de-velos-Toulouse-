@@ -1,5 +1,5 @@
 // Fonction Diapo
-
+/*
 let i = 0;
 
 let images = ["img1.jpg", "img2.jpg", "img3.jpg"];
@@ -53,11 +53,9 @@ function changerEtat () {
 		jouer();
 		etatSlide = true;
 	}
-	console.log("hehegdge");
 }
 
 bPause.addEventListener("click" , changerEtat);
-//bPause.removeEventListener("click", jouer);
 
 // Clique gauche et droit 
 
@@ -101,99 +99,127 @@ function appuyer(e) {
 
 document.addEventListener("keydown", appuyer);
 
+*/
 
 
-/*console.log(images.length);*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ORIENTE OBJET 
-/*
+
 let diapo = {
-	// Fonction Diapo
 
-let i = 0;
-let images = ["img1.jpg", "img2.jpg", "img3.jpg"];
-let temps = 5000;
-let interval = setInterval("changeImg()", temps); 
-let bGauche = document.getElementById("flecheG");
-let bDroite = document.getElementById("flecheD");
-let bPause = document.getElementById("bDiapo");
-window.onload = changeImg; 
+i : 0,
+images : ["img1.jpg", "img2.jpg", "img3.jpg"],
+temps : 5000,
+interval : null,
+bPause : document.getElementById("bPause"),
+etatSlide : false,
+bGauche : document.getElementById("flecheG"),
+bDroite : document.getElementById("flecheD"),
+slide : document.slide,
 
-
-
-
-function changeImg() {
-
-	document.slide.src = images[i];
-
-	if (i < images.length - 1) {
-		i++;
+init : function() {
+	this.slide.src = this.images[this.i];
+	window.onload = this.changerEtat.bind(this); 
+	this.bPause.addEventListener("click" , this.changerEtat.bind(this));
+	this.bGauche.addEventListener("click", this.reculer.bind(this));
+	this.bDroite.addEventListener("click", this.avancer.bind(this));
+	document.addEventListener("keydown", this.appuyer.bind(this));
+},
+changeImg : function() {
+	if (this.i < this.images.length - 1) {
+		this.i++;
 	} else {
-		i = 0;
+		this.i = 0;
 	}
-
-}
-
-
-
-
+	this.slide.src = this.images[this.i];
+},
 // Bouton Pause
-
-
-function arreter() {
-	clearInterval(interval);
-	bPause.innerHTML = "";
-	bPause.textContent = "Jouer";
-};
-/*
-function jouer() {
-		setInterval("changeImg()", temps);
-		bPause.innerHTML = "";
-		bPause.textContent = "Pause";
-};
-
-bPause.addEventListener("click" , arreter);
-//bPause.removeEventListener("click", jouer);
-
+arreter : function() {
+	clearInterval(this.interval);
+	this.bPause.innerHTML = "";
+	this.bPause.textContent = "Jouer";
+},
+jouer : function() {
+		this.interval = setInterval(this.changeImg.bind(this), this.temps);
+		this.bPause.innerHTML = "";
+		this.bPause.textContent = "Pause";
+},
+changerEtat : function() {
+	if (this.etatSlide) {
+		this.arreter();
+		this.etatSlide = false;
+	} else {
+		this.jouer();
+		this.etatSlide = true;
+	}
+},
 // Clique gauche et droit 
+reculer : function() {
 
+	this.slide.src = this.images[this.i];
 
-
-function reculer() {
-
-	document.slide.src = images[i];
-
-	if ((i <= images.length - 1) && (i !== 0)) {
-		i--;
+	if ((this.i <= this.images.length - 1) && (this.i !== 0)) {
+		this.i--;
 	} else {
-		i = images.length - 1;
+		this.i = this.images.length - 1;
 	}
-}
+},
+avancer : function() {
 
-function avancer() {
+	this.slide.src = this.images[this.i];
 
-	document.slide.src = images[i];
-
-	if ( (i === 0) || (i < images.length - 1) ) {
-		i++;
+	if ( (this.i === 0) || (this.i < this.images.length - 1) ) {
+		this.i++;
 	} else {
-		i = 0
+		this.i = 0
 	}
-}
-
-bGauche.addEventListener("click", reculer);
-bDroite.addEventListener("click", avancer);
-
+},
 // Appui sur les flèches de gauche et de droite
-
-function appuyer(e) {
+appuyer : function(e) {
 	if (e.keyCode === 37) {
-		reculer();
+		this.reculer();
 	} else if (e.keyCode === 39) 
-		avancer();
- }
+		this.avancer();
+ },
 
-document.addEventListener("keydown", appuyer);
+};
+
+diapo.init();
 
 
-}*/
+/*
+function a(callback) {
+
+	callback("salut");
+
+}
+
+function b(message){
+	alert(message);
+}
+
+a(b);
+*/

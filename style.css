@@ -2,7 +2,9 @@
 	background-color: grey;
 }
 
-h1 {
+/* Diapo */
+
+h1,h2 {
 	color: red;
 	text-align: center;
 	border : 2px red solid;
@@ -12,15 +14,28 @@ h1 {
 img {
 	width: 600px;
 	height: 300px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
 }
 
-#bDiapo, #flecheD, #flecheG {
+#diapo, #bDiapo {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#diapo {
+	width: 600px;
+}
+
+#bDiapo {
+	width: 100px;
+}
+
+#flecheD, #flecheG, #bPause {
 	border: 1px solid white;
 	padding: 5px 5px 5px 5px;
 	background-color: red;
 	color: white;
+} 
+
+h2 {
+
 }
