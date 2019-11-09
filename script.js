@@ -225,9 +225,9 @@ a(b);
 */
 
 
-/* Carte */
+// Affichage Carte 
 
-	let mymap = L.map('mapid').setView([51.505, -0.09], 13);
+	let mymap = L.map('mapid').setView([43.600247, 1.444700], 13);
 
 	let tuileRue = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -237,5 +237,6 @@ a(b);
 })
 	tuileRue.addTo(mymap);
 
+// Récupération données stations
 
 
