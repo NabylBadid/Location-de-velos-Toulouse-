@@ -230,7 +230,7 @@ a(b);
 	let mymap = L.map('mapid').setView([43.600247, 1.444700], 13);
 
 	let tuileRue = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	//attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 	maxZoom: 18,
 	id: 'mapbox.streets',
 	accessToken: 'pk.eyJ1IjoibmFieWwiLCJhIjoiY2sycHltd2p1MDY5MTNlbW9mODNqdTNhbCJ9.ZBB6hmUZi_JNNjbhURXljw'
@@ -239,4 +239,25 @@ a(b);
 
 // Récupération données stations
 
+// URL recup donnees stations https://api.jcdecaux.com/vls/v1/stations?contract=toulouse&apiKey=18e9df72cf97bc3cc6bafec0bfdd7ba2e461c99f
+
+// Création d'une requete HTTP
+let req = new XMLHttpRequest();
+// La requête est asynchrone lorsque le 3ème paramètre vaut true ou est absent
+req.open("GET", "https://api.jcdecaux.com/vls/v1/stations?contract=toulouse&apiKey=18e9df72cf97bc3cc6bafec0bfdd7ba2e461c99f");
+req.send(req);
+req.addEventListener("load", function () {
+    if (req.status >= 200 && req.status < 400) { // Le serveur a réussi à traiter la requête
+		console.log(JSON.parse(req.responseText));
+		let stationsListe = JSON.parse(req.responseText);
+		stationsListe.forEach(function(station) {
+			console.log(station.position.lat);
+			// Appeler la fonction qui appelle le marqueur 
+			let marker = L.marker([station.position.lat, station.position.lng]).addTo(mymap);
+		})
+    } else {
+        // Affichage des informations sur l'échec du traitement de la requête
+        console.error(req.status + " " + req.statusText);
+    }
+});
 
