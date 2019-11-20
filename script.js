@@ -251,9 +251,22 @@ req.addEventListener("load", function () {
 		console.log(JSON.parse(req.responseText));
 		let stationsListe = JSON.parse(req.responseText);
 		stationsListe.forEach(function(station) {
-			console.log(station.position.lat);
 			// Appeler la fonction qui appelle le marqueur 
 			let marker = L.marker([station.position.lat, station.position.lng]).addTo(mymap);
+		marker.addEventListener("click", function cliqueMarqueur() {
+		let nomStation  = document.getElementById("nom");
+		let statutStation  = document.getElementById("statut");
+		let adresseStation  = document.getElementById("adresse");
+		let placesStation  = document.getElementById("places");
+		let velosStation  = document.getElementById("velos");
+		let boutonStation  = document.getElementById("reserve");
+		nomStation.textContent = station.name.split("-").pop();
+		statutStation.textContent = station.status;
+		adresseStation.textContent = station.address;
+		placesStation.textContent = station.bike_stands;
+		velosStation.textContent = station.available_bikes;
+		console.log("clique !");
+		}); 
 		})
     } else {
         // Affichage des informations sur l'échec du traitement de la requête
@@ -261,3 +274,11 @@ req.addEventListener("load", function () {
     }
 });
 
+
+let myIcon = L.icon({
+	iconUrl: "marqueur.png",
+	iconSize: [0, 10],
+})
+
+L.marker({icon: myIcon}).addTo(mymap);
+// Clique sur un marqueur
