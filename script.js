@@ -252,7 +252,7 @@ req.addEventListener("load", function () {
 		let stationsListe = JSON.parse(req.responseText);
 		stationsListe.forEach(function(station) {
 			// Appeler la fonction qui appelle le marqueur 
-			let marker = L.marker([station.position.lat, station.position.lng]).addTo(mymap);
+			let marker = L.marker([station.position.lat, station.position.lng], {icon: myIcon}).addTo(mymap);
 		marker.addEventListener("click", function cliqueMarqueur() {
 		let nomStation  = document.getElementById("nom");
 		let statutStation  = document.getElementById("statut");
@@ -276,9 +276,7 @@ req.addEventListener("load", function () {
 
 
 let myIcon = L.icon({
-	iconUrl: "marqueur.png",
-	iconSize: [0, 10],
-})
-
-L.marker({icon: myIcon}).addTo(mymap);
+	iconUrl: iconBase,
+	iconSize: [38, 95],
+});
 // Clique sur un marqueur
