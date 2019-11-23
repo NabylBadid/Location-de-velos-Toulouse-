@@ -37,7 +37,7 @@
     		<legend>Détails de la station</legend>
 		<div>
 			<label for="name">Nom :</label>
-			<p id="nom"></p>
+			<p id="nomStation"></p>
 		</div>
 		<div>
 			<label for="statut">Statut :</label>
@@ -56,6 +56,15 @@
 			<label for="velos">Vélos disponibles :</label>
 			<p id="velos"></p>
 		</div>
+		<div>
+			<label for="nom">Nom :</label>
+			<input type="text" name="nom" id="nomUtilisateur" minlength="3" required>
+		</div>
+		<div>
+			<label for="prenom">Prénom :</label>
+			<input type="text" name="prenom" minlength="3" required>
+		</div>
+		<p id="message"></p>
 		<div>
 			<input type="submit" name="reserve" value="Réserver un vélo">
 		</div>

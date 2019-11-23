@@ -246,37 +246,51 @@ let req = new XMLHttpRequest();
 // La requête est asynchrone lorsque le 3ème paramètre vaut true ou est absent
 req.open("GET", "https://api.jcdecaux.com/vls/v1/stations?contract=toulouse&apiKey=18e9df72cf97bc3cc6bafec0bfdd7ba2e461c99f");
 req.send(req);
+let nomStation  = document.getElementById("nomStation");
+let statutStation  = document.getElementById("statut");
+let adresseStation  = document.getElementById("adresse");
+let placesStation  = document.getElementById("places");
+let velosStation  = document.getElementById("velos");
+let boutonStation  = document.getElementById("reserve");
 req.addEventListener("load", function () {
     if (req.status >= 200 && req.status < 400) { // Le serveur a réussi à traiter la requête
-		console.log(JSON.parse(req.responseText));
+		//console.log(JSON.parse(req.responseText));
 		let stationsListe = JSON.parse(req.responseText);
 		stationsListe.forEach(function(station) {
 			// Appeler la fonction qui appelle le marqueur 
-			let marker = L.marker([station.position.lat, station.position.lng], {icon: myIcon}).addTo(mymap);
+			let marker = L.marker([station.position.lat, station.position.lng]).addTo(mymap);
 		marker.addEventListener("click", function cliqueMarqueur() {
-		let nomStation  = document.getElementById("nom");
-		let statutStation  = document.getElementById("statut");
-		let adresseStation  = document.getElementById("adresse");
-		let placesStation  = document.getElementById("places");
-		let velosStation  = document.getElementById("velos");
-		let boutonStation  = document.getElementById("reserve");
 		nomStation.textContent = station.name.split("-").pop();
 		statutStation.textContent = station.status;
 		adresseStation.textContent = station.address;
 		placesStation.textContent = station.bike_stands;
 		velosStation.textContent = station.available_bikes;
-		console.log("clique !");
-		}); 
 		})
+		});
     } else {
         // Affichage des informations sur l'échec du traitement de la requête
         console.error(req.status + " " + req.statusText);
     }
 });
 
+let champNom = document.getElementById("nomUtilisateur");
+champNom.focus();
 
-let myIcon = L.icon({
-	iconUrl: iconBase,
-	iconSize: [38, 95],
-});
-// Clique sur un marqueur
+let nomUtilisateur = document.getElementById("nomUtilisateur");
+let prenomUtilisateur = document.getElementById("prenom");
+let message = document.getElementById("message");
+
+function verifSaisi (e) {
+	let regexSaisie = /[a-z]/;
+	let validiteSaisie = "";
+	let saisie = e.target.value;
+	if ((!regexSaisie.test(saisie)) || (saisie.indexOf("/d") === 1)) {
+		validiteSaisie = "Votre nom et votre prénom doivent contenir au moins une lettre des ne doivent pas contenir de chiffre";
+		console.log("clique");
+	}
+	message.textContent = validiteSaisie;
+}
+
+
+nomUtilisateur.addEventListener("blur", verifSaisi);
+//prenomUtilisateur.addEventListener("blur", verifSaisi);
