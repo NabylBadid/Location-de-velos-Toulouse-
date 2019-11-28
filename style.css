@@ -1,5 +1,5 @@
-* {
-	/*background-color: red;*/
+body {
+	background-color: grey;
 	z-index: 1;
 }
 
@@ -43,7 +43,7 @@ img {
 
 /* Marqeurs */
 
-.leaflet-marker-icon{
+.leaflet-marker-icon {
 	background-color : rgba(255, 255, 255, 0);
 	box-shadow: rgba(255, 255, 255, 0);
 }
@@ -57,3 +57,28 @@ img {
 	margin-left: auto;
 	background-color: white;
 }
+
+/* Formulaire */
+
+form {
+	height: 400px;
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top : 50px;
+}
+
+fieldset {
+	margin-bottom: 50px;
+}
+
+/* Signature */
+
+#canvas {
+	height: 200px;
+	width: 300px;
+	margin-right: auto;
+	margin-left: auto;
+	border: 1px solid black;
+	display: none;
+} 

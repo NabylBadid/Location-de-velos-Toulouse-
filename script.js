@@ -251,7 +251,7 @@ let statutStation  = document.getElementById("statut");
 let adresseStation  = document.getElementById("adresse");
 let placesStation  = document.getElementById("places");
 let velosStation  = document.getElementById("velos");
-let boutonStation  = document.getElementById("reserve");
+let boutonStation  = document.getElementById("reserver");
 req.addEventListener("load", function () {
     if (req.status >= 200 && req.status < 400) { // Le serveur a réussi à traiter la requête
 		//console.log(JSON.parse(req.responseText));
@@ -273,24 +273,51 @@ req.addEventListener("load", function () {
     }
 });
 
-let champNom = document.getElementById("nomUtilisateur");
-champNom.focus();
-
 let nomUtilisateur = document.getElementById("nomUtilisateur");
 let prenomUtilisateur = document.getElementById("prenom");
 let message = document.getElementById("message");
+let canvas = $("canvas");
 
 function verifSaisi (e) {
-	let regexSaisie = /[a-z]/;
-	let validiteSaisie = "";
+	let regexSaisie = /\d/;
 	let saisie = e.target.value;
-	if ((!regexSaisie.test(saisie)) || (saisie.indexOf("/d") === 1)) {
-		validiteSaisie = "Votre nom et votre prénom doivent contenir au moins une lettre des ne doivent pas contenir de chiffre";
+	if ((regexSaisie.test(saisie)) || (saisie.length < 2)) {
+		message.textContent = "Votre nom et votre prénom doivent contenir au moins une lettre et ne peuvent pas contenir de chiffre.";
 		console.log("clique");
+		nomUtilisateur.value = "";
+		prenomUtilisateur.value = "";
+	} else {
+		display = getComputedStyle(canvas).display;
+		display.textContent = "block";
 	}
-	message.textContent = validiteSaisie;
 }
 
+function soumissionForm (e) {
+	let saisieNomUtilisateur = e.nomUtilisateur.value;
+	let saisiePrenomUtilisateur = e.prenomUtilisateur.value;
+	let regexSaisie = /\d/;
+	if ((regexSaisie.test(saisieNomUtilisateur)) || (regexSaisie.test(saisiePrenomUtilisateur)) || (saisiePrenomUtilisateur < 2) || (saisieNomUtilisateur < 2)){
+		console.log("clique");
+		message.textContent = "Votre nom et votre prénom doivent contenir au moins une lettre et ne peuvent pas contenir de chiffre.";
+		nomUtilisateur.value = "";
+		prenomUtilisateur.value = "";		
+	} else {
+		canvas.style("display", "block");
+	}
+}
+
+function enleverMsg () {
+	if ((nomUtilisateur.value === "") || (prenomUtilisateur.value === "")) {
+		message.textContent = "";
+	}
+}
 
 nomUtilisateur.addEventListener("blur", verifSaisi);
-//prenomUtilisateur.addEventListener("blur", verifSaisi);
+prenomUtilisateur.addEventListener("blur", verifSaisi);
+nomUtilisateur.addEventListener("focus", enleverMsg);
+prenomUtilisateur.addEventListener("focus", enleverMsg);
+
+boutonStation.addEventListener("submit", verifSaisi);
+
+		/*display = getComputedStyle(canvas).display;
+		display.textContent = "block";		*/
