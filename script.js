@@ -100,7 +100,6 @@ nameUser.addEventListener("blur", checkSeizure);
 firstNameUser.addEventListener("blur", checkSeizure);
 nameUser.addEventListener("focus", removeMsg);
 firstNameUser.addEventListener("focus", removeMsg);
-
 buttonStation.addEventListener("submit", checkSeizure);
 
 /*display = getComputedStyle(canvas).display;

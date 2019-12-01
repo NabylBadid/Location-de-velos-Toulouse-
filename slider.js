@@ -1,4 +1,105 @@
+class Diapo {
+
+	constructor () {
+		this.i = 0,
+		this.images = ["img1.jpg", "img2.jpg", "img3.jpg"],
+		this.temps = 5000
+		this.interval = null
+		this.bPause = document.getElementById("bPause")
+		this.etatSlide = false
+		this.bGauche = document.getElementById("flecheG")
+		this.bDroite = document.getElementById("flecheD")
+		this.slide = document.slide
+	};
+
+
+    init () {
+        this.slide.src = this.images[this.i];
+        window.onload = this.changeState.bind(this);
+        this.bPause.addEventListener("click", this.changeState.bind(this));
+        this.bGauche.addEventListener("click", this.back.bind(this));
+        this.bDroite.addEventListener("click", this.advance.bind(this));
+        document.addEventListener("keydown", this.press.bind(this));
+    }
+
+    changeImg () {
+        if (this.i < this.images.length - 1) {
+            this.i++;
+        } else {
+            this.i = 0;
+        }
+        this.slide.src = this.images[this.i];
+    }
+
+    // Bouton Pause
+    stop () {
+        clearInterval(this.interval);
+        this.bPause.innerHTML = "";
+        this.bPause.textContent = "Jouer";
+    }
+
+    play () {
+        this.interval = setInterval(this.changeImg.bind(this), this.temps);
+        this.bPause.innerHTML = "";
+        this.bPause.textContent = "Pause";
+    }
+
+    changeState () {
+        if (this.etatSlide) {
+            this.stop();
+            this.etatSlide = false;
+        } else {
+            this.play();
+            this.etatSlide = true;
+        }
+    }
+
+    // Clique gauche et droit 
+    back () {
+
+        this.slide.src = this.images[this.i];
+
+        if ((this.i <= this.images.length - 1) && (this.i !== 0)) {
+            this.i--;
+        } else {
+            this.i = this.images.length - 1;
+        }
+    }
+
+    advance () {
+
+        this.slide.src = this.images[this.i];
+
+        if ((this.i === 0) || (this.i < this.images.length - 1)) {
+            this.i++;
+        } else {
+            this.i = 0
+        }
+    }
+
+    // Appui sur les flèches de gauche et de droite
+    press (e) {
+        if (e.keyCode === 37) {
+            this.back();
+        } else if (e.keyCode === 39)
+            this.advance();
+    }
+
+};
+
+let slider = new Diapo;
+slider.init();
+
+
+
+
+
+
+
+
+
 // ORIENTE OBJET 
+/*
 let Diapo = {
 
     i: 0,
@@ -11,7 +112,7 @@ let Diapo = {
     bDroite: document.getElementById("flecheD"),
     slide: document.slide,
 
-    init: function() {
+    init () {
         this.slide.src = this.images[this.i];
         window.onload = this.changeState.bind(this);
         this.bPause.addEventListener("click", this.changeState.bind(this));
@@ -20,7 +121,7 @@ let Diapo = {
         document.addEventListener("keydown", this.press.bind(this));
     },
 
-    changeImg: function() {
+    changeImg () {
         if (this.i < this.images.length - 1) {
             this.i++;
         } else {
@@ -30,19 +131,19 @@ let Diapo = {
     },
 
     // Bouton Pause
-    stop: function() {
+    stop () {
         clearInterval(this.interval);
         this.bPause.innerHTML = "";
         this.bPause.textContent = "Jouer";
     },
 
-    play: function() {
+    play () {
         this.interval = setInterval(this.changeImg.bind(this), this.temps);
         this.bPause.innerHTML = "";
         this.bPause.textContent = "Pause";
     },
 
-    changeState: function() {
+    changeState () {
         if (this.etatSlide) {
             this.stop();
             this.etatSlide = false;
@@ -53,7 +154,7 @@ let Diapo = {
     },
 
     // Clique gauche et droit 
-    back: function() {
+    back () {
 
         this.slide.src = this.images[this.i];
 
@@ -64,7 +165,7 @@ let Diapo = {
         }
     },
 
-    advance: function() {
+    advance () {
 
         this.slide.src = this.images[this.i];
 
@@ -76,7 +177,7 @@ let Diapo = {
     },
 
     // Appui sur les flèches de gauche et de droite
-    press: function(e) {
+    press (e) {
         if (e.keyCode === 37) {
             this.back();
         } else if (e.keyCode === 39)
@@ -86,7 +187,7 @@ let Diapo = {
 };
 
 Diapo.init();
-
+*/
 
 
 // Fonction Diapo
@@ -191,6 +292,3 @@ function appuyer(e) {
 document.addEventListener("keydown", appuyer);
 
 */
-
-
-
