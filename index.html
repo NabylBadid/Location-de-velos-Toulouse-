@@ -1,84 +1,76 @@
+
+
 <!DOCTYPE html>
 <html>
-<head>
-	<title>P3Essai</title>
-	<meta charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-   		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-   		crossorigin="" />
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-   		integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-   		crossorigin=""></script>
-</head>
-<body>
-
-	<h1>Louez votre vélo en un rien de temps !</h1>
-	
-	<div id="diapo">
-		<img name="slide">
-	</div>
-
-	<div id="bDiapo">
-		<button id="flecheG">&lt;</button>
-		<button id="bPause">Pause</button>
-		<button id="flecheD">&gt;</button>
-	</div>
-
-	<h2>Jetez un coup d'oeil à la carte</h2>
-
-	<div id="mapid"></div>
-
-	<form action="" method="get" class="form">
-		
-		<fieldset>
-    		<legend>Détails de la station</legend>
-		<div>
-			<label for="name">Nom :</label>
-			<p id="nomStation"></p>
-		</div>
-		<div>
-			<label for="statut">Statut :</label>
-			<p id="statut"></p>
-		</div>
-		<div>
-			<label for="adresse">Adresse :</label>
-			<p id="adresse"></p>
-		</div>
-		<div>
-			<label for="places">Places disponibles :</label>
-			<p id="places"></p>
-
-		</div>
-		<div>
-			<label for="velos">Vélos disponibles :</label>
-			<p id="velos"></p>
-		</div>
-		<div>
-			<label for="nom">Nom :</label>
-			<input type="text" name="nom" id="nomUtilisateur" minlength="3" required>
-		</div>
-		<div>
-			<label for="prenom">Prénom :</label>
-			<input type="text" name="prenom" id="prenom" minlength="3" required>
-		</div>
-		<div id="sig">
-			<p id="canvas"></p>
-		</div>
-		<p id="message"></p>
-		<div>
-			<input type="submit" name="reserve" id="reserver" value="Réserver un vélo">
-		</div>
-		</fieldset>
-	</form>
-
-
-	<script
-	src="https://code.jquery.com/jquery-3.4.1.min.js"
-	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-	crossorigin="anonymous"></script>
-	<script src="script.js"></script>
-
-</body>
+   <head>
+      <title>P3Essai</title>
+      <meta charset="utf-8" />
+      <link rel="stylesheet" type="text/css" href="style.css" />
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+         crossorigin="" />
+      <!-- Make sure you put this AFTER Leaflet's CSS -->
+      <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+         crossorigin=""></script>
+   </head>
+   <body>
+      <h1>Louez votre vélo en un rien de temps !</h1>
+      <div id="diapo">
+         <img name="slide">
+      </div>
+      <div id="bDiapo">
+         <button id="flecheG">&lt;</button>
+         <button id="bPause">Pause</button>
+         <button id="flecheD">&gt;</button>
+      </div>
+      <h2>Jetez un coup d'oeil à la carte</h2>
+      <div id="mapid"></div>
+      <form action="" method="get" class="form">
+         <fieldset>
+            <legend>Détails de la station</legend>
+            <div>
+               <label for="name">Nom :</label>
+               <p id="nameStation"></p>
+            </div>
+            <div>
+               <label for="state">Statut :</label>
+               <p id="state"></p>
+            </div>
+            <div>
+               <label for="adress">Adresse :</label>
+               <p id="adress"></p>
+            </div>
+            <div>
+               <label for="places">Places disponibles :</label>
+               <p id="places"></p>
+            </div>
+            <div>
+               <label for="bikes">Vélos disponibles :</label>
+               <p id="bikes"></p>
+            </div>
+            <div>
+               <label for="name">Nom :</label>
+               <input type="text" name="nom" id="nameUser" minlength="3" required>
+            </div>
+            <div>
+               <label for="firstName">Prénom :</label>
+               <input type="text" name="firstName" id="firstName" minlength="3" required>
+            </div>
+            <div id="sig">
+               <p id="canvas"></p>
+            </div>
+            <p id="message"></p>
+            <div>
+               <input type="submit" name="reserve" id="reserve" value="Réserver un vélo">
+            </div>
+         </fieldset>
+      </form>
+      <script
+         src="https://code.jquery.com/jquery-3.4.1.min.js"
+         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+         crossorigin="anonymous"></script>
+      <script src="script.js"></script>
+      <script src="slider.js"></script>
+   </body>
 </html>
