@@ -24,43 +24,43 @@
       </div>
       <h2>Jetez un coup d'oeil à la carte</h2>
       <div id="mapid"></div>
-      <form action="" method="get" class="form">
+      <form action="" method="get" id="form">
          <fieldset>
             <legend>Détails de la station</legend>
             <div>
                <label for="name">Nom :</label>
-               <p id="nameStation"></p>
+               <span id="nameStation"></span>
             </div>
             <div>
                <label for="state">Statut :</label>
-               <p id="state"></p>
+               <span id="state"></span>
             </div>
             <div>
                <label for="adress">Adresse :</label>
-               <p id="adress"></p>
+               <span id="adress"></span>
             </div>
             <div>
                <label for="places">Places disponibles :</label>
-               <p id="places"></p>
+               <span id="places"></span>
             </div>
             <div>
                <label for="bikes">Vélos disponibles :</label>
-               <p id="bikes"></p>
+               <span id="bikes"></span>
             </div>
             <div>
                <label for="name">Nom :</label>
-               <input type="text" name="nom" id="nameUser" minlength="3" required>
+               <input type="text" name="nom" id="nameUser" minlength="3" required disabled/>
             </div>
             <div>
                <label for="firstName">Prénom :</label>
-               <input type="text" name="firstName" id="firstName" minlength="3" required>
+               <input type="text" name="firstName" id="firstName" minlength="3" required disabled/>
             </div>
             <div id="sig">
                <p id="canvas"></p>
             </div>
-            <p id="message"></p>
+            <p id="message">Vous devez séléctionner une station avant de pouvoir réserver.</p>
             <div>
-               <input type="submit" name="reserve" id="reserve" value="Réserver un vélo">
+               <input type="submit" name="reserve" id="reserve" value="Réserver un vélo" disabled/>
             </div>
          </fieldset>
       </form>

@@ -52,6 +52,14 @@ req.addEventListener("load", function() {
                 adressStation.textContent = station.address;
                 placesStation.textContent = station.bike_stands;
                 bikesStation.textContent = station.available_bikes;
+                message.textContent = "";
+                nameUser.disabled = false;
+                firstNameUser.disabled = false;
+                if (bikesStation.textContent === "0") {
+                    message.textContent = "Plus aucun vélo n'est disponible à cette station, veuillez en choisir une autre.";
+                    nameUser.disabled = true;
+                    firstNameUser.disabled = true;
+                }                
             })
         });
     } else {
@@ -73,34 +81,38 @@ function checkSeizure(e) { //verifierSaisie
         nameUser.value = "";
         firstNameUser.value = "";
     } else {
-        $("canvas").style("display", "block");
+        buttonStation.disabled = false;
     }
 }
 
+
 function submitForm(e) {
-    let seizureNameUser = e.nomUtilisateur.value;
-    let seizureFirstNameUser = e.prenomUtilisateur.value;
-    let regexSaisie = /\d/;
-    if ((regexSaisie.test(seizureNameUser)) || (regexSaisie.test(seizureFirstNameUser)) || (seizureNameUser < 2) || (seizureFirstNameUser < 2)) {
-        message.textContent = "Votre nom et votre prénom doivent contenir au moins une lettre et ne peuvent pas contenir de chiffre.";
-        seizureNameUser.value = "";
-        seizureFirstNameUser.value = "";
-    } else {
-        canvas.style("display", "block");
-    }
+    let seizureNameUser = nameUser.value;
+    let seizureFirstNameUser = firstNameUser.value;
+    console.log(seizureNameUser);
+    console.log(seizureFirstNameUser);
+    console.log(nameStation.textContent);
+    console.log(stateStation.textContent);
+    console.log(adressStation.textContent);
+    console.log(placesStation.textContent);
+    console.log(bikesStation.textContent);
+    console.log(buttonStation.textContent);
+    canvas.css("display", "block")
+    e.preventDefault();
 }
 
 function removeMsg() {
-    if ((nameUser.value === "") || (firstNameUser.value === "")) {
-        message.textContent = "";
-    }
+/* if ((nameUser.value === "") || (firstNameUser.value === "") && (nameStation.textContent === station.name)) {
+        message.textContent = "Votre nom et votre prénom doivent contenir au moins une lettre et ne peuvent pas contenir de chiffre.";
+    }*/
 }
 
+let form = document.getElementById("form");
 nameUser.addEventListener("blur", checkSeizure);
 firstNameUser.addEventListener("blur", checkSeizure);
 nameUser.addEventListener("focus", removeMsg);
 firstNameUser.addEventListener("focus", removeMsg);
-buttonStation.addEventListener("submit", checkSeizure);
+form.addEventListener("submit", submitForm);
 
-/*display = getComputedStyle(canvas).display;
-display.textContent = "block";		*/
+/*  display = getComputedStyle(canvas).display;
+display.textContent = "block";      */
