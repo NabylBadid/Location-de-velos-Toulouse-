@@ -1,5 +1,4 @@
-class Diapo {
-
+class Slider {
 	constructor () {
 		this.i = 0,
 		this.images = ["img1.jpg", "img2.jpg", "img3.jpg"],
@@ -10,9 +9,8 @@ class Diapo {
 		this.bGauche = document.getElementById("flecheG")
 		this.bDroite = document.getElementById("flecheD")
 		this.slide = document.slide
-	};
-
-
+    };
+    
     init () {
         this.slide.src = this.images[this.i];
         window.onload = this.changeState.bind(this);
@@ -28,7 +26,7 @@ class Diapo {
         } else {
             this.i = 0;
         }
-        this.slide.src = this.images[this.i];
+        this.changeImgSrc(this.i);
     }
 
     // Bouton Pause
@@ -53,11 +51,14 @@ class Diapo {
             this.etatSlide = true;
         }
     }
+    
+    changeImgSrc(number) {
+        this.slide.src = this.images[number];
+    }
 
     // Clique gauche et droit 
     back () {
-
-        this.slide.src = this.images[this.i];
+        this.changeImgSrc(this.i);
 
         if ((this.i <= this.images.length - 1) && (this.i !== 0)) {
             this.i--;
@@ -65,10 +66,9 @@ class Diapo {
             this.i = this.images.length - 1;
         }
     }
-
+    // Avancer dans le diapo
     advance () {
-
-        this.slide.src = this.images[this.i];
+        this.changeImgSrc(this.i);
 
         if ((this.i === 0) || (this.i < this.images.length - 1)) {
             this.i++;
@@ -84,18 +84,10 @@ class Diapo {
         } else if (e.keyCode === 39)
             this.advance();
     }
-
 };
 
-let slider = new Diapo;
+let slider = new Slider;
 slider.init();
-
-
-
-
-
-
-
 
 
 // ORIENTE OBJET 

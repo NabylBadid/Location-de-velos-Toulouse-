@@ -89,14 +89,9 @@ function checkSeizure(e) { //verifierSaisie
 function submitForm(e) {
     let seizureNameUser = nameUser.value;
     let seizureFirstNameUser = firstNameUser.value;
-    console.log(seizureNameUser);
-    console.log(seizureFirstNameUser);
-    console.log(nameStation.textContent);
-    console.log(stateStation.textContent);
-    console.log(adressStation.textContent);
-    console.log(placesStation.textContent);
-    console.log(bikesStation.textContent);
-    console.log(buttonStation.textContent);
+    let choiceStation = [nameStation.textContent, stateStation.textContent, adressStation.textContent, placesStation.textContent, bikesStation.textContent, buttonStation.textContent];
+    console.log(choiceStation);
+    
     canvas.css("display", "block")
     e.preventDefault();
 }
