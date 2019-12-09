@@ -1,7 +1,7 @@
 class Slider {
 	constructor () {
 		this.i = 0,
-		this.images = ["img1.jpg", "img2.jpg", "img3.jpg"],
+		this.images = ["images/img1.jpg", "images/img2.jpg", "images/img3.jpg"],
 		this.temps = 5000
 		this.interval = null
 		this.bPause = document.getElementById("bPause")
@@ -51,7 +51,7 @@ class Slider {
             this.etatSlide = true;
         }
     }
-    
+
     changeImgSrc(number) {
         this.slide.src = this.images[number];
     }
@@ -66,6 +66,7 @@ class Slider {
             this.i = this.images.length - 1;
         }
     }
+    
     // Avancer dans le diapo
     advance () {
         this.changeImgSrc(this.i);

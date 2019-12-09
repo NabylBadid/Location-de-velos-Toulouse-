@@ -59,7 +59,7 @@ req.addEventListener("load", function() {
                     message.textContent = "Plus aucun vélo n'est disponible à cette station, veuillez en choisir une autre.";
                     nameUser.disabled = true;
                     firstNameUser.disabled = true;
-                }                
+                }              
             })
         });
     } else {
@@ -85,14 +85,11 @@ function checkSeizure(e) { //verifierSaisie
     }
 }
 
-
 function submitForm(e) {
     let seizureNameUser = nameUser.value;
     let seizureFirstNameUser = firstNameUser.value;
     let choiceStation = [nameStation.textContent, stateStation.textContent, adressStation.textContent, placesStation.textContent, bikesStation.textContent, buttonStation.textContent];
     console.log(choiceStation);
-    
-    canvas.css("display", "block")
     e.preventDefault();
 }
 
@@ -111,3 +108,7 @@ form.addEventListener("submit", submitForm);
 
 /*  display = getComputedStyle(canvas).display;
 display.textContent = "block";      */
+
+$("reserve").on("click", function() {
+    console.log("hello");
+})

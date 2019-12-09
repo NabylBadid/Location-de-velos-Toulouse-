@@ -1,8 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:og="http://ogp.me/ns#" lang="fr">
    <head>
-      <title>P3Essai</title>
       <meta charset="utf-8" />
+      <title>Location de vélos à toulouse</title>
+      <meta name="description" content="Choissez une station,entrez vos coordonnées,réservez et le tour est joué ! Louez un vélo à toulouse et ses alentours en seulement quelques cliques !" />
+
+      <meta property="og:title" content="Site de location de vélos à toulouse." />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="" /> <!--NE PAS OUBLIER DE METTRE L URL DU SITE-->
+      <meta property="og:image" content="" /><!--NE PAS OUBLIER L IMAGE DESCRIPTIVE-->
+      <meta property="og:description" content="Choissez une station,entrez vos coordonnées,réservez et le tour est joué ! Louez un vélo à toulouse et ses alentours en seulement quelques cliques !" />
+      <meta property="og:locale" content="fr_FR" />
       <link rel="stylesheet" type="text/css" href="css/style.css" />
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -11,6 +19,10 @@
       <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
          integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
          crossorigin=""></script>
+      <script
+         src="https://code.jquery.com/jquery-3.4.1.min.js"
+         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+         crossorigin="anonymous"></script>   
    </head>
    <body>
       <h1>Louez votre vélo en un rien de temps !</h1>
@@ -63,7 +75,10 @@
                <input type="submit" name="reserve" id="reserve" value="Réserver un vélo" disabled/>
             </div>
          </fieldset>
-      </form>
+      </form> 
+      <!--Description de la station (Nom , status...)--> 
+      <!--Formulaire (name,firstname, canvans ..)--> 
+      <!--message 0 vélos--> 
       <script
          src="https://code.jquery.com/jquery-3.4.1.min.js"
          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
