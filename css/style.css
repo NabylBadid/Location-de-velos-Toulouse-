@@ -71,9 +71,10 @@ form {
 fieldset {
 	margin-bottom: 50px;
 }
-
+#info {
+	display: none;
+}
 /* Signature */
-
 #canvas {
 	height: 200px;
 	width: 300px;

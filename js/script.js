@@ -53,8 +53,7 @@ req.addEventListener("load", function() {
                 placesStation.textContent = station.bike_stands;
                 bikesStation.textContent = station.available_bikes;
                 message.textContent = "";
-                nameUser.disabled = false;
-                firstNameUser.disabled = false;
+                info.css("display", "block");
                 if (bikesStation.textContent === "0") {
                     message.textContent = "Plus aucun vélo n'est disponible à cette station, veuillez en choisir une autre.";
                     nameUser.disabled = true;
@@ -71,7 +70,8 @@ req.addEventListener("load", function() {
 let nameUser = document.getElementById("nameUser");
 let firstNameUser = document.getElementById("firstName");
 let message = document.getElementById("message");
-let canvas = $("canvas");
+let info = $("#info");
+let canvas = $("#canvas");
 
 function checkSeizure(e) { //verifierSaisie
     let regexSaisie = /\d/;
@@ -90,14 +90,15 @@ function submitForm(e) {
     let seizureFirstNameUser = firstNameUser.value;
     let choiceStation = [nameStation.textContent, stateStation.textContent, adressStation.textContent, placesStation.textContent, bikesStation.textContent, buttonStation.textContent];
     console.log(choiceStation);
+    console.log(seizureNameUser);
+    console.log(seizureFirstNameUser);
     e.preventDefault();
+    return seizureFirstNameUser;
+    return seizureNameUser;
+    return choiceStation;
 }
 
-function removeMsg() {
-/* if ((nameUser.value === "") || (firstNameUser.value === "") && (nameStation.textContent === station.name)) {
-        message.textContent = "Votre nom et votre prénom doivent contenir au moins une lettre et ne peuvent pas contenir de chiffre.";
-    }*/
-}
+
 
 let form = document.getElementById("form");
 nameUser.addEventListener("blur", checkSeizure);
@@ -108,7 +109,3 @@ form.addEventListener("submit", submitForm);
 
 /*  display = getComputedStyle(canvas).display;
 display.textContent = "block";      */
-
-$("reserve").on("click", function() {
-    console.log("hello");
-})
