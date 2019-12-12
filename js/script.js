@@ -13,7 +13,8 @@ a(b);
 */
 
 
-// Affichage Carte 
+// OBJECT MAP 
+
 let mymap = L.map('mapid').setView([43.600247, 1.444700], 13);
 
 let tuileRue = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -58,7 +59,10 @@ req.addEventListener("load", function() {
                     message.textContent = "Plus aucun vélo n'est disponible à cette station, veuillez en choisir une autre.";
                     nameUser.disabled = true;
                     firstNameUser.disabled = true;
-                }              
+                } else {
+                    nameUser.disabled = false;
+                    firstNameUser.disabled = false;
+                }  
             })
         });
     } else {
@@ -66,6 +70,8 @@ req.addEventListener("load", function() {
         console.error(req.status + " " + req.statusText);
     }
 });
+
+// OBJECT RESERVATION 
 
 let nameUser = document.getElementById("nameUser");
 let firstNameUser = document.getElementById("firstName");
@@ -89,13 +95,61 @@ function submitForm(e) {
     let seizureNameUser = nameUser.value;
     let seizureFirstNameUser = firstNameUser.value;
     let choiceStation = [nameStation.textContent, stateStation.textContent, adressStation.textContent, placesStation.textContent, bikesStation.textContent, buttonStation.textContent];
-    console.log(choiceStation);
-    console.log(seizureNameUser);
-    console.log(seizureFirstNameUser);
+    let stationReserved = $("#stationReserved");
+    stationReserved.text(`${seizureNameUser} ${seizureFirstNameUser} a réservé un vélo à la station ${choiceStation[0]}.`);
+
     e.preventDefault();
-    return seizureFirstNameUser;
-    return seizureNameUser;
-    return choiceStation;
+
+    let timeInMinutes = 20;
+    let currentTimeStocked = sessionStorage.currentTime = Date.parse(new Date());
+    //let currentTime = Date.parse(new Date());
+    let deadlineStocked = sessionStorage.deadline = new Date(currentTimeStocked + timeInMinutes * 60 * 1000);    
+    function getTimeRemaining(endtime) {
+        let t = Date.parse(endtime) - Date.parse(new Date());
+        let secondes = Math.floor((t / 1000) % 60);
+        let minutes = Math.floor((t / 1000 / 60) % 60);
+        return {
+            t,
+            minutes,
+            secondes
+        };
+    }
+    
+    function initializeClock(id, endtime) {
+        //let clock = document.getElementById(id); // Essayer en mettan du jQuery
+        function updateClock() {
+            let t = getTimeRemaining(endtime);
+            console.log(t);
+            let wordMinutes = "minutes";
+            let wordSecondes = "secondes";
+            let countdown = $("#countdown");
+
+            let wordMinutes2 = ((t.secondes === 1) || (t.minutes === 0)) ? "minute" : "minutes";
+            console.log(wordMinutes2);
+            
+
+            if(t.total <= 0) {
+                countdown.text("Votre réservation a éxpirée.");
+            }
+            
+            if(t.minutes === 1) {
+                wordMinutes = "minute";
+            } else if(t.minutes === 0) {
+                wordMinutes = "";
+                minutes = "";
+            }
+            
+            if(t.secondes <= 1) {
+                wordSecondes = "seconde";
+            }
+            countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);            
+        }
+        //sessionStorage.setItem('countdown', countdown);
+        updateClock(); // run function once at first to avoid delay (éxécuter une fois pour éviter les retards)
+        let timeInterval = setInterval(updateClock,1000);
+    }
+
+    initializeClock("reservation", deadlineStocked);
 }
 
 
@@ -103,9 +157,6 @@ function submitForm(e) {
 let form = document.getElementById("form");
 nameUser.addEventListener("blur", checkSeizure);
 firstNameUser.addEventListener("blur", checkSeizure);
-nameUser.addEventListener("focus", removeMsg);
-firstNameUser.addEventListener("focus", removeMsg);
 form.addEventListener("submit", submitForm);
-
 /*  display = getComputedStyle(canvas).display;
 display.textContent = "block";      */

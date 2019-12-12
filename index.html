@@ -62,16 +62,19 @@
                <input type="text" name="firstName" id="firstName" minlength="3" required/>
                <p id="canvas"></p>
             </div>
-            <p id="message">Vous devez séléctionner une station avant de pouvoir réserver.</p>
+               <p id="message">Vous devez séléctionner une station avant de pouvoir réserver.</p>
             <div>
                <input type="submit" name="reserve" id="reserve" value="Réserver un vélo" disabled/>
             </div>
          </fieldset>
       </form>
-      <div id="reservation">
-         <p>Vous avez réservé un vélo à la station <span id="reserveStation"></span></p>
-         <p>Votre réservation expirera dans <span id="timer"></span></p>
-      </div>
+      <!-- TEST-->
+      <!--<div class="countdown-wrap">-->
+         <div id="reservation">
+            <p id="stationReserved"></p>
+            <p id="countdown"></p>
+         </div>
+      <!-- test -->
       <!--Description de la station (Nom , status...)--> 
       <!--Formulaire (name,firstname, canvans ..)--> 
       <!--message 0 vélos--> 
@@ -81,5 +84,6 @@
          crossorigin="anonymous"></script>
       <script src="js/script.js"></script>
       <script src="js/slider.js"></script>
+      <script src="js/countdown.js"></script>
    </body>
 </html>
