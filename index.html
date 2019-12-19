@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:og="http://ogp.me/ns#" lang="fr" />
+<html xmlns:og="http://ogp.me/ns#">
    <head>
       <meta charset="utf-8" />
       <title>Location de vélos à toulouse</title>
@@ -12,6 +12,7 @@
       <meta property="og:locale" content="fr_FR" />
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link rel="stylesheet" type="text/css" href="css/style.css" />
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /><!--COURS AJOUT BOOTSTRAP-->
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
          crossorigin="" />
@@ -19,55 +20,72 @@
       <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
          integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
          crossorigin=""></script>
+      <script
+         src="https://code.jquery.com/jquery-3.4.1.min.js"
+         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+         crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script><!--COURS AJOUT BOOTSTRAP-->
    </head>
    <body>
-      <h1>Louez votre vélo en un rien de temps !</h1>
-      <div id="diapo">
-         <img name="slide">
+      <h1 class="container-fluid">LOC'VELO TOULOUSE</h1>
+      <h2 class="container"> <a href="#diapo"><span> Louez votre vélo en un rien de temps !</span></a></h1>
+      <div id="diapo" class="container">
+         <img name="slide" class="img-thumbnail">
       </div>
-      <div id="bDiapo">
-         <button id="flecheG">&lt;</button>
-         <button id="bPause">Pause</button>
-         <button id="flecheD">&gt;</button>
+      <div class="container">
+            <div id="bDiapo" class="btn-group" >
+                  <button type="button" class="btn btn-danger" id="flecheG">&lt;</button>
+                  <button type="button" class="btn btn-danger" id="bPause">Pause</button>
+                  <button type="button" class="btn btn-danger" id="flecheD">&gt;</button>
+               </div>
       </div>
-      <h2>Jetez un coup d'oeil à la carte</h2>
-      <div id="mapid"></div>
-      <form action="" method="get" id="form">
-         <fieldset>
-            <legend>Détails de la station</legend>
-            <div>
-               <label for="name">Nom :</label>
-               <span id="nameStation"></span>
+      <h2 class="container"><a href="#mapid"><span>Jetez un coup d'oeil à la carte</span></a></h2>   
+      <div class="container">
+         <div class="row">
+            <div id="mapid" class="col-md-7"></div>
+               <form action="" method="get" id="form" class="container col-md-4">
+                  <fieldset>
+                     <legend><span class="number">1</span>Détails de la station</legend>
+                     <div class="form-group">
+                        <label for="name" class="underline">Nom :</label>
+                        <span id="nameStation"></span>
+                     </div>
+                     <div class="form-group">  
+                        <label for="state" class="underline">Statut :</label>
+                        <span id="state"></span>
+                     </div>
+                     <div class="form-group">
+                        <label for="adress" class="underline">Adresse :</label>
+                        <span id="adress"></span>
+                     </div>
+                     <div class="form-group">
+                        <label for="places" class="underline">Places disponibles :</label>
+                        <span id="places"></span>
+                     </div>
+                     <div class="form-group">
+                        <label for="bikes" class="underline">Vélos disponibles :</label>
+                        <span id="bikes"></span>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <legend><span class="number">2</span>Informations locataire</legend>
+                     <div id="info" class="form-group">
+                        <label for="name" class="underline">Nom :</label>
+                        <input type="text" name="nom" id="nameUser" minlength="3" class="form-control" required disabled/>
+                        <label for="firstName" class="underline">Prénom :</label>
+                        <input type="text" name="firstName" id="firstName" minlength="3" class="form-control" required disabled/>
+                        <p id="canvas"></p>
+                     </div>
+                        <p id="message">Vous devez séléctionner une station avant de pouvoir réserver.</p>
+                     <div class="form-group">
+                        <input type="submit" name="reserve" id="reserve" class="btn btn-danger" value="Réserver" disabled/>
+                     </div>
+                  </fieldset>
+               </form>
             </div>
-            <div>
-               <label for="state">Statut :</label>
-               <span id="state"></span>
-            </div>
-            <div>
-               <label for="adress">Adresse :</label>
-               <span id="adress"></span>
-            </div>
-            <div>
-               <label for="places">Places disponibles :</label>
-               <span id="places"></span>
-            </div>
-            <div>
-               <label for="bikes">Vélos disponibles :</label>
-               <span id="bikes"></span>
-            </div>
-            <div id="info">
-               <label for="name">Nom :</label>
-               <input type="text" name="nom" id="nameUser" minlength="3" required />
-               <label for="firstName">Prénom :</label>
-               <input type="text" name="firstName" id="firstName" minlength="3" required/>
-               <p id="canvas"></p>
-            </div>
-               <p id="message">Vous devez séléctionner une station avant de pouvoir réserver.</p>
-            <div>
-               <input type="submit" name="reserve" id="reserve" value="Réserver un vélo" disabled/>
-            </div>
-         </fieldset>
-      </form>
+         </div>      
+
+
       <!-- TEST-->
       <!--<div class="countdown-wrap">-->
          <div id="reservation">
@@ -78,12 +96,10 @@
       <!--Description de la station (Nom , status...)--> 
       <!--Formulaire (name,firstname, canvans ..)--> 
       <!--message 0 vélos--> 
-      <script
-         src="https://code.jquery.com/jquery-3.4.1.min.js"
-         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-         crossorigin="anonymous"></script>
       <script src="js/script.js"></script>
       <script src="js/slider.js"></script>
       <script src="js/countdown.js"></script>
+      <script src="js/map.js"></script>
+      <script src="js/main.js"></script>
    </body>
 </html>

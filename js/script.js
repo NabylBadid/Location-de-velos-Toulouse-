@@ -13,63 +13,7 @@ a(b);
 */
 
 
-// OBJECT MAP 
 
-let mymap = L.map('mapid').setView([43.600247, 1.444700], 13);
-
-let tuileRue = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoibmFieWwiLCJhIjoiY2sycHltd2p1MDY5MTNlbW9mODNqdTNhbCJ9.ZBB6hmUZi_JNNjbhURXljw'
-})
-tuileRue.addTo(mymap);
-
-// Récupération données stations
-
-// URL recup donnees stations https://api.jcdecaux.com/vls/v1/stations?contract=toulouse&apiKey=18e9df72cf97bc3cc6bafec0bfdd7ba2e461c99f
-
-// Création d'une requete HTTP
-let req = new XMLHttpRequest();
-// La requête est asynchrone lorsque le 3ème paramètre vaut true ou est absent
-req.open("GET", "https://api.jcdecaux.com/vls/v1/stations?contract=toulouse&apiKey=18e9df72cf97bc3cc6bafec0bfdd7ba2e461c99f");
-req.send(req);
-let nameStation = document.getElementById("nameStation");
-let stateStation = document.getElementById("state");
-let adressStation = document.getElementById("adress");
-let placesStation = document.getElementById("places");
-let bikesStation = document.getElementById("bikes");
-let buttonStation = document.getElementById("reserve");
-req.addEventListener("load", function() {
-    if (req.status >= 200 && req.status < 400) { // Le serveur a réussi à traiter la requête
-        //console.log(JSON.parse(req.responseText));
-        let stationsListe = JSON.parse(req.responseText);
-        stationsListe.forEach(function(station) {
-            // Appeler la fonction qui appelle le marqueur 
-            let marker = L.marker([station.position.lat, station.position.lng]).addTo(mymap);
-            marker.addEventListener("click", function clickMarker() {
-                nameStation.textContent = station.name.split("-").pop();
-                stateStation.textContent = station.status;
-                adressStation.textContent = station.address;
-                placesStation.textContent = station.bike_stands;
-                bikesStation.textContent = station.available_bikes;
-                message.textContent = "";
-                info.css("display", "block");
-                if (bikesStation.textContent === "0") {
-                    message.textContent = "Plus aucun vélo n'est disponible à cette station, veuillez en choisir une autre.";
-                    nameUser.disabled = true;
-                    firstNameUser.disabled = true;
-                } else {
-                    nameUser.disabled = false;
-                    firstNameUser.disabled = false;
-                }  
-            })
-        });
-    } else {
-        // Affichage des informations sur l'échec du traitement de la requête
-        console.error(req.status + " " + req.statusText);
-    }
-});
 
 // OBJECT RESERVATION 
 
@@ -100,10 +44,19 @@ function submitForm(e) {
 
     e.preventDefault();
 
-    let timeInMinutes = 20;
-    let currentTimeStocked = sessionStorage.currentTime = Date.parse(new Date());
-    //let currentTime = Date.parse(new Date());
-    let deadlineStocked = sessionStorage.deadline = new Date(currentTimeStocked + timeInMinutes * 60 * 1000);    
+    let timeInMinutes = 1;
+    let currentTime = Date.parse(new Date());
+    //console.log(currentTime);
+    //sessionStorage.setItem("currentT" , Date.parse(new Date()));
+    //console.log(sessionStorage.getItem("currentT"));
+    
+    
+    let deadline = new Date(currentTime + timeInMinutes * 60 * 1000);
+    //console.log(deadline);
+    
+    //sessionStorage.setItem("deadline2", Date.parse(currentTime * 60 * 1000));
+    //console.log(sessionsStorage.getItem("deadline2"));
+    
     function getTimeRemaining(endtime) {
         let t = Date.parse(endtime) - Date.parse(new Date());
         let secondes = Math.floor((t / 1000) % 60);
@@ -116,23 +69,23 @@ function submitForm(e) {
     }
     
     function initializeClock(id, endtime) {
-        //let clock = document.getElementById(id); // Essayer en mettan du jQuery
+        //let clock = document.getElementById(id); // Essayer en mettant du jQuery
         function updateClock() {
             let t = getTimeRemaining(endtime);
             console.log(t);
-            let wordMinutes = "minutes";
-            let wordSecondes = "secondes";
+            //let wordMinutes = "minutes";
+            //let wordSecondes = "secondes";
             let countdown = $("#countdown");
 
-            let wordMinutes2 = ((t.secondes === 1) || (t.minutes === 0)) ? "minute" : "minutes";
-            console.log(wordMinutes2);
-            
+            let wordMinutes = ((t.minutes === 1) || (t.minutes === 0)) ? "minute" : "minutes";
+            let wordSecondes = ((t.secondes === 1) || (t.secondes === 0)) ? "seconde" : "secondes";
 
-            if(t.total <= 0) {
+            if(t.t === 0) {
+                clearInterval(timeInterval);
                 countdown.text("Votre réservation a éxpirée.");
             }
             
-            if(t.minutes === 1) {
+            /*if(t.minutes === 1) {
                 wordMinutes = "minute";
             } else if(t.minutes === 0) {
                 wordMinutes = "";
@@ -141,15 +94,15 @@ function submitForm(e) {
             
             if(t.secondes <= 1) {
                 wordSecondes = "seconde";
-            }
+            }*/
             countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);            
         }
         //sessionStorage.setItem('countdown', countdown);
-        updateClock(); // run function once at first to avoid delay (éxécuter une fois pour éviter les retards)
+        updateClock(); // run function once at first to avoid delay (éxécuter une fois pour éviter les retards).
         let timeInterval = setInterval(updateClock,1000);
     }
 
-    initializeClock("reservation", deadlineStocked);
+    initializeClock("reservation", deadline);
 }
 
 

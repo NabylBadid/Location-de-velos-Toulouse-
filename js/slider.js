@@ -2,12 +2,12 @@ class Slider {
 	constructor () {
 		this.i = 0,
 		this.images = ["images/img1.jpg", "images/img2.jpg", "images/img3.jpg"],
-		this.temps = 5000
-		this.interval = null
-		this.bPause = document.getElementById("bPause")
-		this.etatSlide = false
-		this.bGauche = document.getElementById("flecheG")
-		this.bDroite = document.getElementById("flecheD")
+		this.temps = 5000,
+		this.interval = null,
+		this.bPause = document.getElementById("bPause"),
+		this.etatSlide = false,
+		this.bGauche = document.getElementById("flecheG"),
+		this.bDroite = document.getElementById("flecheD"),
 		this.slide = document.slide
     };
     
@@ -86,10 +86,6 @@ class Slider {
             this.advance();
     }
 };
-
-let slider = new Slider;
-slider.init();
-
 
 // ORIENTE OBJET 
 /*
