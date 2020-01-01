@@ -37,7 +37,7 @@ h1:after {
 	z-index: -5;
 	display: block;
 	text-shadow: none;
-  }
+}
 
 /* Diapo */
 h2 {
@@ -92,13 +92,15 @@ h2 a:hover {
   color: #d90075;
   text-decoration: none;
 }
-img {
+#imgSlider {
 	max-width: 100vh;
 	height: auto;
+	box-shadow: 1px 1px 12px #555;
 }
 #diapo, #bDiapo {
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 30px;
 }
 #diapo {
 	width: 600px;
@@ -121,9 +123,21 @@ img {
 #flecheD, #bPause {
 	border-left-color: #FFF;
 }
+/* Buttons */
+.btn.btn-danger, .btn.btn-danger, .btn.btn-danger:hover, .btn.btn-danger:active, .btn.btn-danger:visited  {
+	background-color: #d90075;
+	border-color: #d90075;
+}
+
+
+/* Map + Station */
+#mapStation {
+	margin-top: 30px;
+}
 
 /* Carte */
 #mapid {
+	box-shadow: 1px 1px 12px #555;
 	min-width: 300px;
 	min-height: 300px;
 }
@@ -145,15 +159,18 @@ img {
 
 /* Formulaire */
 form{
-	/*border: 1px solid #555;*/
+	border: 1px solid rgb(236, 223, 223);
 	background-color: #EDEDED;
-	max-width: 500px;
 	padding: 10px 20px;
-	margin: 10px auto;
+	/*margin: 10px auto;*/
+	margin-right: 0px;
 	padding: 20px;
-	border-radius: 8px;
 	font-family: Georgia, "Times New Roman", Times, serif;
-	margin-left: 20px;
+	margin-left: 30px;
+	box-shadow: 1px 1px 12px #555;
+}
+.container.col-md-4 {
+	margin-right: 0px;
 }
 form input {
 	font-family: Georgia, "Times New Roman", Times, serif;
@@ -177,7 +194,7 @@ form input {
 label, legend {
 	text-decoration: underline;
 }
-.number {
+.number, .letter {
 	background: #d90075;
 	color: #fff;
 	height: 30px;
@@ -188,6 +205,8 @@ label, legend {
 	line-height: 30px;
 	text-align: center;
 	text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+}
+.number {
 	border-radius: 15px 15px 15px 0px;
 }
 
@@ -200,3 +219,22 @@ label, legend {
 	border: 1px solid black;
 	display: block;
 } 
+
+/* Reservation */
+
+.letter {
+	border-radius: 0px 15px 15px 15px;
+}
+#reservation {
+	border: 1px solid rgb(236, 223, 223);
+	background-color: #EDEDED;
+	padding: 20px 20px 20px 20px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	box-shadow: 1px 1px 12px #555;
+	margin-top: 30px;
+}
+/* cancel button */
+
+#cancelReservation {
+	display: none;
+}

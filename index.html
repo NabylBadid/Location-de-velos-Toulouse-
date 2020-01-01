@@ -27,10 +27,10 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script><!--COURS AJOUT BOOTSTRAP-->
    </head>
    <body>
-      <h1 class="container-fluid">LOC'VELO TOULOUSE</h1>
+      <h1 class="container-fluid">LOC'<span id="bikeTitle">VELO </span> TOULOUSE</h1>
       <h2 class="container"> <a href="#diapo"><span> Louez votre vélo en un rien de temps !</span></a></h1>
       <div id="diapo" class="container">
-         <img name="slide" class="img-thumbnail">
+         <img name="slide" class="img-thumbnail"  id="imgSlider">
       </div>
       <div class="container">
             <div id="bDiapo" class="btn-group" >
@@ -40,7 +40,7 @@
                </div>
       </div>
       <h2 class="container"><a href="#mapid"><span>Jetez un coup d'oeil à la carte</span></a></h2>   
-      <div class="container">
+      <div class="container" id="mapStation">
          <div class="row">
             <div id="mapid" class="col-md-7"></div>
                <form action="" method="get" id="form" class="container col-md-4">
@@ -67,7 +67,7 @@
                         <span id="bikes"></span>
                      </div>
                   </fieldset>
-                  <fieldset>
+                  <fieldset id="info">
                      <legend><span class="number">2</span>Informations locataire</legend>
                      <div id="info" class="form-group">
                         <label for="name" class="underline">Nom :</label>
@@ -88,9 +88,16 @@
 
       <!-- TEST-->
       <!--<div class="countdown-wrap">-->
-         <div id="reservation">
-            <p id="stationReserved"></p>
-            <p id="countdown"></p>
+         <div id="reservation" class="container">
+            <div id="infosStation" class="col-md-8">
+               <h3><span class="letter">i</span>Informations sur la réservation</h3>
+               <p id="stationReserved">Aucune réservation en cours.</p>
+               <p id="countdown"></p>
+            </div>
+            <div id="cancel" class="col-md-4">
+               <button type="button" class="btn btn-danger" id="cancelReservation">Annuler</button>
+            </div>
+            
          </div>
       <!-- test -->
       <!--Description de la station (Nom , status...)--> 
@@ -98,7 +105,7 @@
       <!--message 0 vélos--> 
       <script src="js/script.js"></script>
       <script src="js/slider.js"></script>
-      <script src="js/countdown.js"></script>
+      <script src="js/reservation.js"></script>
       <script src="js/map.js"></script>
       <script src="js/main.js"></script>
    </body>

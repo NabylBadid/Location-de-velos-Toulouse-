@@ -4,20 +4,21 @@ class Slider {
 		this.images = ["images/img1.jpg", "images/img2.jpg", "images/img3.jpg"],
 		this.temps = 5000,
 		this.interval = null,
-		this.bPause = document.getElementById("bPause"),
+		this.bPause = $("#bPause"),
 		this.etatSlide = false,
-		this.bGauche = document.getElementById("flecheG"),
-		this.bDroite = document.getElementById("flecheD"),
-		this.slide = document.slide
-    };
+		this.bGauche = $("#flecheG"),
+        this.bDroite = $("#flecheD"),
+        this.document = $(document),
+        this.slide = document.slide
+        };
     
     init () {
         this.slide.src = this.images[this.i];
         window.onload = this.changeState.bind(this);
-        this.bPause.addEventListener("click", this.changeState.bind(this));
-        this.bGauche.addEventListener("click", this.back.bind(this));
-        this.bDroite.addEventListener("click", this.advance.bind(this));
-        document.addEventListener("keydown", this.press.bind(this));
+        this.bPause.click(this.changeState.bind(this));
+        this.bGauche.click(this.back.bind(this));
+        this.bDroite.click(this.advance.bind(this));
+        this.document.keydown(this.press.bind(this));
     }
 
     changeImg () {
@@ -32,24 +33,23 @@ class Slider {
     // Bouton Pause
     stop () {
         clearInterval(this.interval);
-        this.bPause.innerHTML = "";
-        this.bPause.textContent = "Jouer";
+        this.bPause.text("Jouer");
     }
 
     play () {
         this.interval = setInterval(this.changeImg.bind(this), this.temps);
-        this.bPause.innerHTML = "";
-        this.bPause.textContent = "Pause";
+        this.bPause.text("Pause");
     }
 
     changeState () {
         if (this.etatSlide) {
             this.stop();
             this.etatSlide = false;
+            
         } else {
             this.play();
-            this.etatSlide = true;
-        }
+            this.etatSlide = true;            
+        }        
     }
 
     changeImgSrc(number) {
@@ -85,7 +85,13 @@ class Slider {
         } else if (e.keyCode === 39)
             this.advance();
     }
+
 };
+
+
+
+
+
 
 // ORIENTE OBJET 
 /*
