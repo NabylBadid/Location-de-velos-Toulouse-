@@ -7,7 +7,7 @@ class Map {
         this.adressStation = $("#adress"),
         this.placesStation = $("#places"),
         this.bikesStation = $("#bikes"),
-        this.buttonStation = $("#reserve"),
+        this.buttonStation = $("#submitButton"),
         this.info = $("#info"),
         this.nameUser = $("#nameUser"),
         this.firstNameUser = $("#firstName"),
@@ -66,6 +66,7 @@ class Map {
             nameUser.prop("disabled", true);
             firstNameUser.prop("disabled", true);
         } else {
+            message.text("");
             nameUser.prop("disabled", false);
             firstNameUser.prop("disabled", false);
         }

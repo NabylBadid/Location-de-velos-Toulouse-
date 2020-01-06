@@ -30,7 +30,9 @@
       <h1 class="container-fluid">LOC'<span id="bikeTitle">VELO </span> TOULOUSE</h1>
       <h2 class="container"> <a href="#diapo"><span> Louez votre vélo en un rien de temps !</span></a></h1>
       <div id="diapo" class="container">
-         <img name="slide" class="img-thumbnail"  id="imgSlider">
+         <div class="text-center">
+            <img name="slide" class="img-responsive" id="imgSlider">
+         </div>
       </div>
       <div class="container">
             <div id="bDiapo" class="btn-group" >
@@ -69,16 +71,18 @@
                   </fieldset>
                   <fieldset id="info">
                      <legend><span class="number">2</span>Informations locataire</legend>
-                     <div id="info" class="form-group">
-                        <label for="name" class="underline">Nom :</label>
-                        <input type="text" name="nom" id="nameUser" minlength="3" class="form-control" required disabled/>
+                     <div id="lastName" class="form-group">
+                        <label for="nameUser" class="underline control-label">Nom :</label>
+                        <input type="text" name="nameUser" id="nameUser" minlength="3" class="form-control" required disabled/>
+                     </div>
+                     <div id="firstNameUser" class="form-group">
                         <label for="firstName" class="underline">Prénom :</label>
                         <input type="text" name="firstName" id="firstName" minlength="3" class="form-control" required disabled/>
-                        <p id="canvas"></p>
                      </div>
                         <p id="message">Vous devez séléctionner une station avant de pouvoir réserver.</p>
+                        <p id="canvas"></p>
                      <div class="form-group">
-                        <input type="submit" name="reserve" id="reserve" class="btn btn-danger" value="Réserver" disabled/>
+                        <input type="submit" name="submitButton" id="submitButton" class="btn btn-danger" value="Réserver" disabled/>
                      </div>
                   </fieldset>
                </form>

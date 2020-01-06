@@ -1,7 +1,7 @@
 class Slider {
 	constructor () {
 		this.i = 0,
-		this.images = ["images/img1.jpg", "images/img2.jpg", "images/img3.jpg"],
+		this.images = ["images/img12.jpg", "images/carte.jpg", "images/station.jpg", "images/locataire.jpg", "images/reservation.jpg"],
 		this.temps = 5000,
 		this.interval = null,
 		this.bPause = $("#bPause"),
