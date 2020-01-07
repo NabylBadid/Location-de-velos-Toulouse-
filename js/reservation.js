@@ -77,8 +77,6 @@ class Reservation {
         let minutes = Math.floor((t / 1000 / 60) % 60);
 
         sessionStorage.setItem("t" , Date.parse(endtime) - Date.parse(new Date()));
-        sessionStorage.setItem("secondes", Math.floor((t / 1000) % 60));
-        sessionStorage.setItem("minutes",  Math.floor((t / 1000 / 60) % 60));
 
         return {
             t,
@@ -90,12 +88,10 @@ class Reservation {
     clockInitialize (id, endtime) {
         this.updateClock();
         let timeInterval = setInterval(this.updateClock,1000);
-console.log(timeInterval);
         
         this.cancel.css("display", "block");
         this.buttonStation.prop("disabled", true);
-        this.callCancel(this.timeInterval);
-console.log(this);
+        this.callCancel(timeInterval);
 
         return timeInterval;
                 
@@ -109,22 +105,21 @@ console.log(this);
         sessionStorage.setItem("wordMinutes", ((sessionStorage.getItem("minutes") === 1) || (sessionStorage.getItem("minutes") === 0)) ? "minute" : "minutes");
         sessionStorage.setItem("wordSecondes", ((sessionStorage.getItem("secondes") === 1) || (sessionStorage.getItem("secondes") === 0)) ? "seconde" : "secondes");
         sessionStorage.setItem("t", t.t);
-        
+
 
         if ((t.t <= 0) || (t.t === "NaN")) {
-            clearInterval(this.timeInterval);
+            clearInterval(timeInterval);
             $("#stationReserved").text("Votre réservation a éxpirée.");
             $("#countdown").hide();            
             sessionStorage.clear();
             $("#cancelReservation").css("display", "none");
             $("#submitButton").prop("disabled", false);
-            } else {
+            } else if (t.t > 0 ) {
                 countdown.show();
                 let secStorage = sessionStorage.getItem("secondes");
                 let minStorage = sessionStorage.getItem("minutes");
                 countdown.text(`Votre réservation expirera dans ${minStorage} ${wordMinutes} et ${secStorage} ${wordSecondes}.`);
             }
-
 
         countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);  
     }
@@ -157,16 +152,20 @@ console.log(time);
             countdown.text(`Votre réservation expirera dans ${minutesTime} ${sessionStorage.getItem("wordMinutes")} et ${secondesTime} ${sessionStorage.getItem("wordSecondes")}.`);
             let ti = setInterval(this.callCountdown, 1000);
             cancel.css("display", "block");
-            buttonStation.prop("disabled", true);
-            this.callCancel(ti);
+            $("#submitButton").prop("disabled", true);
+            reservation.callCancel(ti);
+console.log("jjjj");
+
 
         }else if (( time < 0 ) || (time === "NaN")) {
+console.log("ok");
+
             clearInterval(this.callCountdown)
             reservationText.text("Votre réservation a éxpirée.");
             countdown.hide();
             sessionStorage.clear();
             cancel.css("display", "none");
-            buttonStation.prop("disabled", false);
+            buttonStation.prop("disabled", true);
         }
 
     }
