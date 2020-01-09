@@ -10,12 +10,12 @@
 // let countdown = $("#countdown");
 // let cancelReservation = $("#cancelReservation");
 // let reservation = $("#reservation");
-// let buttonStation = document.getElementById("reserve");
-
+// let buttonStation = document.getElementById("submitButton");
 
 // function checkSeizure(e) { //verifierSaisie
 //     let regexSaisie = /\d/;
 //     let seizure = e.target.value;
+    
 //     if ((regexSaisie.test(seizure)) || (seizure.length < 2)) {
 //         message.textContent = "Votre nom et votre prénom doivent contenir au moins une lettre et ne peuvent pas contenir de chiffre.";
 //         nameUser.value = "";
@@ -26,6 +26,8 @@
 // }
 
 // function submitForm(e) {
+//     e.preventDefault();
+
 //     let seizureNameUser = nameUser.val();
 //     let seizureFirstNameUser = firstNameUser.val();
 //     let choiceStation = nameStation.textContent;
@@ -35,7 +37,6 @@
 //     let nameStocked = sessionStorage.getItem("nameUser");
 //     let firstNameStocked = sessionStorage.getItem("firstNameUser");
 //     let stationStocked = sessionStorage.getItem("choiceStation");
-//     e.preventDefault();
 //     stationReserved.text(`${nameStocked} ${firstNameStocked} a réservé un vélo à la station ${stationStocked}.`);
 
 //     let timeInMinutes = 1;
@@ -85,7 +86,6 @@
 //                     let minStorage = sessionStorage.getItem("minutes");
 //                     countdown.text(`Votre réservation expirera dans ${minStorage} ${wordMinutes} et ${secStorage} ${wordSecondes}.`);
 //                 }
-
 
 //             countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);            
 //         }

@@ -6,14 +6,14 @@ class Reservation {
         this.info = $("#info"),
         this.reservation = $("#reservation"),
         this.testFirstName = $("#testFisrtName");
-        this.testLastName = $("#testLastName"); 
+        this.testLastName = $("#testLastName");
         this.form = $("#form"),
         this.stationReserved = $("#stationReserved"),
         this.countdown = $("#countdown"),
         this.cancel = $("#cancelReservation"),
         this.buttonStation = $("#submitButton"),
         this.nameStation = $("#nameStation"),
-        this.timeInterval = setInterval(this.updateClock,1000)
+        this.timeInterval = null
     };
 
 
@@ -52,7 +52,7 @@ class Reservation {
     store (e) {
         e.preventDefault();
 
-        let timeInMinutes = 1;
+        let timeInMinutes = 0.2;
         let currentTime = Date.parse(new Date());
 
         sessionStorage.setItem("nameUser", $("#nameUser").val());
@@ -61,14 +61,13 @@ class Reservation {
         sessionStorage.setItem("deadline", new Date(currentTime + timeInMinutes * 60 * 1000));
 
         this.display();
-        this.clockInitialize();
+        this.clockInitialize(this.reservation, sessionStorage.getItem("deadline"));
     }
 
     display () {
 
-        $("#stationReserved").text(`${sessionStorage.getItem("nameUser")} ${sessionStorage.getItem("firstNameUser")} a réservé un vélo à la station ${sessionStorage.getItem("choiceStation")}.`); 
+        $("#stationReserved").text(`${sessionStorage.getItem("nameUser")} ${sessionStorage.getItem("firstNameUser")} a réservé un vélo à la station ${sessionStorage.getItem("choiceStation")}.`);
         this.clockInitialize(this.reservation, sessionStorage.getItem("deadline"));
-
     }
 
     getTimeRemaining (endtime) {
@@ -83,45 +82,54 @@ class Reservation {
             minutes,
             secondes
         };
-    }    
+    }
 
     clockInitialize (id, endtime) {
-        this.updateClock();
-        let timeInterval = setInterval(this.updateClock,1000);
-        
-        this.cancel.css("display", "block");
-        this.buttonStation.prop("disabled", true);
-        this.callCancel(timeInterval);
 
-        return timeInterval;
-                
+        this.updateClock();
+        this.timeInterval = setInterval(this.updateClock,1000);
+        $("#cancelReservation").css("display", "block");
+        $("#submitButton").prop("disabled", true);
+        reservation.callCancel(this.timeInterval);
+
     }
 
     updateClock () {
+
         let t = reservation.getTimeRemaining(sessionStorage.getItem("deadline"));
+
         let countdown = $("#countdown");
+        let cancel = $("#cancelReservation");
         let wordMinutes = ((t.minutes === 1) || (t.minutes === 0)) ? "minute" : "minutes";
         let wordSecondes = ((t.secondes === 1) || (t.secondes === 0)) ? "seconde" : "secondes";
+        
         sessionStorage.setItem("wordMinutes", ((sessionStorage.getItem("minutes") === 1) || (sessionStorage.getItem("minutes") === 0)) ? "minute" : "minutes");
         sessionStorage.setItem("wordSecondes", ((sessionStorage.getItem("secondes") === 1) || (sessionStorage.getItem("secondes") === 0)) ? "seconde" : "secondes");
         sessionStorage.setItem("t", t.t);
+console.log(t.t);
 
 
-        if ((t.t <= 0) || (t.t === "NaN")) {
-            clearInterval(timeInterval);
+        if ((t.t === 0) || (t.t === "NaN")) {
+            clearInterval(this.timeInterval);
             $("#stationReserved").text("Votre réservation a éxpirée.");
-            $("#countdown").hide();            
+            $("#countdown").hide();
             sessionStorage.clear();
-            $("#cancelReservation").css("display", "none");
+            cancel.css("display", "none");
             $("#submitButton").prop("disabled", false);
-            } else if (t.t > 0 ) {
-                countdown.show();
-                let secStorage = sessionStorage.getItem("secondes");
-                let minStorage = sessionStorage.getItem("minutes");
-                countdown.text(`Votre réservation expirera dans ${minStorage} ${wordMinutes} et ${secStorage} ${wordSecondes}.`);
-            }
+console.log("ok");
+console.log(this.interval);
 
-        countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);  
+        } else if (t.t > 0) {
+            let secStorage = sessionStorage.getItem("secondes");
+            let minStorage = sessionStorage.getItem("minutes");
+
+            countdown.show();
+            countdown.text(`Votre réservation expirera dans ${minStorage} ${wordMinutes} et ${secStorage} ${wordSecondes}.`);
+console.log(this.interval);
+        }
+
+        countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);
+
     }
 
     callCancel (interval) {
@@ -135,40 +143,88 @@ class Reservation {
     }
 
     callCountdown () {
-
-        let time = sessionStorage.getItem("t");
-        let reservationText = $("#stationReserved");
-        let countdown = $("#countdown");
-        let cancel = $("#cancelReservation");
-        let buttonStation = $("#submitButton");
-        let secondesTime = Math.floor((time / 1000) % 60);
-        let minutesTime = Math.floor((time / 1000 / 60) % 60);
+    
+    
+    let time = Date.parse(sessionStorage.getItem("deadline")) - Date.parse(new Date());
+    let buttonStation = $("#submitButton");
+    let reservationText = $("#stationReserved");
+    let countdown = $("#countdown");
+    let cancel = $("#cancelReservation");
 console.log(time);
-        countdown.hide();
+
 
 
         if (time > 0) {
+            this.timeInterval = setInterval(this.callCountdown, 1000);
+
             reservationText.text(`${sessionStorage.getItem("nameUser")} ${sessionStorage.getItem("firstNameUser")} a réservé un vélo à la station ${sessionStorage.getItem("choiceStation")}.`);
-            countdown.text(`Votre réservation expirera dans ${minutesTime} ${sessionStorage.getItem("wordMinutes")} et ${secondesTime} ${sessionStorage.getItem("wordSecondes")}.`);
-            let ti = setInterval(this.callCountdown, 1000);
+            countdown.text(`Votre réservation expirera dans ${Math.floor((time / 1000 / 60) % 60)} ${sessionStorage.getItem("wordMinutes")} et ${Math.floor((time / 1000) % 60)} ${sessionStorage.getItem("wordSecondes")}.`);
             cancel.css("display", "block");
-            $("#submitButton").prop("disabled", true);
-            reservation.callCancel(ti);
-console.log("jjjj");
+            buttonStation.prop("disabled", false);
+            reservation.callCancel(this.timeInterval);
 
-
-        }else if (( time < 0 ) || (time === "NaN")) {
-console.log("ok");
-
-            clearInterval(this.callCountdown)
+        }else if (time < 0) {
+            clearInterval(this.timeInterval)
             reservationText.text("Votre réservation a éxpirée.");
             countdown.hide();
             sessionStorage.clear();
             cancel.css("display", "none");
             buttonStation.prop("disabled", true);
         }
-
     }
+}
+
+
+//     callCountdown () {
+
+//         let reservationText = $("#stationReserved");
+//         let countdown = $("#countdown");
+//         let cancel = $("#cancelReservation");
+//         let buttonStation = $("#submitButton");
+        
+//         let time = sessionStorage.getItem("t");
+// console.log(time);
+
+//         if (time > 0) {
+ 
+//             let interval = setInterval(this.callCountdown, 1000);
+//             cancel.css("display", "block");
+//             $("#submitButton").prop("disabled", true);
+//             reservation.callCancel(interval);
+//             reservationText.text(`${sessionStorage.getItem("nameUser")} ${sessionStorage.getItem("firstNameUser")} a réservé un vélo à la station ${sessionStorage.getItem("choiceStation")}.`);
+//             countdown.text(`Votre réservation expirera dans ${Math.floor((time / 1000 / 60) % 60)} ${sessionStorage.getItem("wordMinutes")} et ${Math.floor((time / 1000) % 60)} ${sessionStorage.getItem("wordSecondes")}.`);
+// console.log("jjjj");
+
+
+//         }else if ( time < 0 ) {
+// console.log("ok");
+
+//             clearInterval(this.callCountdown)
+//             reservationText.text("Votre réservation a éxpirée.");
+//             countdown.hide();
+//             sessionStorage.clear();
+//             cancel.css("display", "none");
+//             buttonStation.prop("disabled", true);
+//         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //     callCountdown () {
 //         let reservationText = $("#stationReserved");
@@ -177,7 +233,7 @@ console.log("ok");
 //         let buttonStation = $("#submitButton");
 //         let time = sessionStorage.getItem("t");
 // console.log(time);
-        
+
 
 //         if (time > 0) {
 //             let ti = setInterval(this.callCountdown, 1000);
@@ -186,7 +242,7 @@ console.log("ok");
 //             countdown.text(`Votre réservation expirera dans ${Math.floor((time / 1000 / 60) % 60)} ${sessionStorage.getItem("wordMinutes")} et ${Math.floor((time / 1000) % 60)} ${sessionStorage.getItem("wordSecondes")}.`);
 //             cancel.css("display", "block");
 //             buttonStation.prop("disabled", true);
-//             reservation.callCancel(ti);            
+//             reservation.callCancel(ti);
 //         }else if ((time < 0) || (time === "NaN")) {
 //             clearInterval(this.callCountdown);
 //             reservationText.text("Votre réservation a éxpirée.");
@@ -195,18 +251,17 @@ console.log("ok");
 //             cancel.css("display", "none");
 //             buttonStation.prop("disabled", false);
 //         }
-        
+
 //         if (time === "NaN") {
 //             countdown.hide();
 //         }
 //     }
 
-}
 
-// let form = $("#form"); 
+// let form = $("#form");
 
 // function submitForm () {
-    
+
 // }
 
 // form.submit(submitForm);
@@ -241,7 +296,7 @@ console.log("ok");
 //         if ((this.regexSaisie.test(e.target.value)) || (e.target.value.length < 2)) {
 //             this.message.text( "Votre nom et votre prénom doivent contenir au moins une lettre et ne peuvent pas contenir de chiffre.");
 //             this.nameUser.val("");
-//             this.firstNameUser.val("");            
+//             this.firstNameUser.val("");
 //         } else {
 //             this.buttonStation.prop("disabled", false);
 //         }
@@ -249,7 +304,7 @@ console.log("ok");
 
 //     getTimeRemaining(endtime) {
 //         let t = Date.parse(endtime) - Date.parse(new Date());
-        
+
 //         let secondes = Math.floor((t / 1000) % 60);
 //         let minutes = Math.floor((t / 1000 / 60) % 60);
 //         sessionStorage.setItem("t" , Date.parse(endtime) - Date.parse(new Date()));
@@ -272,7 +327,7 @@ console.log("ok");
 //         sessionStorage.setItem("wordMinutes", ((sessionStorage.getItem("minutes") === 1) || (sessionStorage.getItem("minutes") === 0)) ? "minute" : "minutes");
 //         sessionStorage.setItem("wordSecondes", ((sessionStorage.getItem("secondes") === 1) || (sessionStorage.getItem("secondes") === 0)) ? "seconde" : "secondes");
 //         sessionStorage.setItem("t", t.t);
-        
+
 
 //         if(t.t === 0) {
 //             clearInterval(timeInterval);
@@ -289,7 +344,7 @@ console.log("ok");
 //             }
 
 
-//         countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);            
+//         countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);
 //     }
 
 //     clockInitialize(id, endtime) {
@@ -301,7 +356,7 @@ console.log("ok");
 //         buttonStation.prop("disabled", true);
 //         this.callCancel(timeInterval);
 //     }
-    
+
 //     submitForm(e) {
 //         e.preventDefault();
 //         let seizureNameUser = $("#nameUser").val();
@@ -320,8 +375,8 @@ console.log("ok");
 //         let stationStocked = sessionStorage.getItem("choiceStation");
 //         let deadlineStorage = sessionStorage.getItem("deadline");
 //         console.log(deadlineStorage);
-                
-//         stationReserved.text(`${nameStocked} ${firstNameStocked} a réservé un vélo à la station ${stationStocked}.`);    
+
+//         stationReserved.text(`${nameStocked} ${firstNameStocked} a réservé un vélo à la station ${stationStocked}.`);
 //         this.clockInitialize(this.reservation, deadline).bind(this);
 //     }
 
@@ -343,7 +398,7 @@ console.log("ok");
 //             this.cancelReservation.css("display", "block");
 //             this.buttonStation.disabled =  true;
 //             callCancel(ti);
-    
+
 //         }else if (this.time < 0) {
 //             clearInterval(this.callCountdown);
 //             this.stationReserved.text("Votre réservation a éxpirée.");
@@ -352,8 +407,9 @@ console.log("ok");
 //             this.cancelReservation.css("display", "none");
 //             this.buttonStation.disabled = false;
 //         }
-    
+
 //     }
 
 
 // }
+
