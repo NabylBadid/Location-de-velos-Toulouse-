@@ -220,6 +220,7 @@ label, legend {
 	margin-left: auto;
 	border: 1px solid black;
 	display: block;
+	margin-bottom: 20px;
 } 
 
 /* Reservation */

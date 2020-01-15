@@ -94,8 +94,6 @@ class Reservation {
         
         sessionStorage.setItem("wordMinutes", wordMinutes);
         sessionStorage.setItem("wordSecondes", wordSecondes);
-
-console.log(remainingTimeObject.remainingTime);
         
         // Reservation expirée 
         if (remainingTimeObject.remainingTime <= 0) {
@@ -114,7 +112,7 @@ console.log(remainingTimeObject.remainingTime);
     }
 
     callCancel (interval) {
-         let self = this;
+        let self = this;
             this.cancel.click(function () {
             clearInterval(interval);
             sessionStorage.clear();
@@ -125,34 +123,37 @@ console.log(remainingTimeObject.remainingTime);
     }
 
     callCountdown () {
-    let time = Date.parse(sessionStorage.getItem("deadline")) - Date.parse(new Date());
-console.log(time);
-
+        let deadlineStorage = sessionStorage.getItem("deadline");
+        let time = Date.parse(deadlineStorage) - Date.parse(new Date());
 
         // Réservation en cours
-        if (time > 0) {
-            this.timeInterval = setInterval(() => {this.callCountdown();}, 1000);
-            this.stationReserved.text(`${sessionStorage.getItem("nameUser")} ${sessionStorage.getItem("firstNameUser")} a réservé un vélo à la station ${sessionStorage.getItem("choiceStation")}.`);
-            this.countdown.text(`Votre réservation expirera dans ${Math.floor((time / 1000 / 60) % 60)} ${sessionStorage.getItem("wordMinutes")} et ${Math.floor((time / 1000) % 60)} ${sessionStorage.getItem("wordSecondes")}.`);
-            this.cancel.css("display", "block");
-            this.buttonStation.prop("disabled", true);
-            this.self.callCancel(this.timeInterval);
-        // Réservation expiré
-        }else {
-            clearInterval(this.timeInterval);
-            this.timeInterval = null;
-            this.stationReserved.text("Votre réservation a expiré.");
-            this.countdown.hide();
-            sessionStorage.removeItem("deadline");
-            this.cancel.css("display", "none");
-            this.buttonStation.prop("disabled", false);
-        }
+            if (time > 0) {
+                this.timeInterval = setInterval(() => {this.callCountdown();}, 1000);
+                this.stationReserved.text(`${sessionStorage.getItem("nameUser")} ${sessionStorage.getItem("firstNameUser")} a réservé un vélo à la station ${sessionStorage.getItem("choiceStation")}.`);
+                this.countdown.text(`Votre réservation expirera dans ${Math.floor((time / 1000 / 60) % 60)} ${sessionStorage.getItem("wordMinutes")} et ${Math.floor((time / 1000) % 60)} ${sessionStorage.getItem("wordSecondes")}.`);
+                this.cancel.css("display", "block");
+                this.buttonStation.prop("disabled", true);
+                this.self.callCancel(this.timeInterval);
+            // Réservation expiré
+            }else {
+                clearInterval(this.timeInterval);
+                this.timeInterval = null;
+                this.stationReserved.text("Votre réservation a expiré.");
+                this.countdown.hide();
+                sessionStorage.removeItem("deadline");
+                this.cancel.css("display", "none");
+                this.buttonStation.prop("disabled", false);
+            }
+            // Avant première réservation sinon le bouton ne sera pas disabled 
+            if (deadlineStorage == undefined) {
+                this.buttonStation.prop("disabled", true);
+                this.stationReserved.text("Aucune réservation en cours.");
+            }
 
-        if ((time <= 0) && (this.nameUser.val() === null) || (this.firstNameUser.val() === null)) {
-            this.buttonStation.prop("disabled", true);
-            this.message.text("Veuillez remplir les champs requis.")
-console.log("ok");
-        }
+            // if ((time <= 0) && (this.nameUser.val() === null) || (this.firstNameUser.val() === null)) {
+            //     //this.buttonStation.prop("disabled", true);
+            //     this.message.text("Veuillez remplir les champs requis.")
+            // }
     }
 
     recoverStorage () {
@@ -161,243 +162,3 @@ console.log("ok");
         $("#nameStation").text(sessionStorage.getItem("choiceStation"));        
     }
 }
-
-
-//     callCountdown () {
-
-//         let reservationText = $("#stationReserved");
-//         let countdown = $("#countdown");
-//         let cancel = $("#cancelReservation");
-//         let buttonStation = $("#submitButton");
-        
-//         let time = sessionStorage.getItem("t");
-// console.log(time);
-
-//         if (time > 0) {
- 
-//             let interval = setInterval(this.callCountdown, 1000);
-//             cancel.css("display", "block");
-//             $("#submitButton").prop("disabled", true);
-//             reservation.callCancel(interval);
-//             reservationText.text(`${sessionStorage.getItem("nameUser")} ${sessionStorage.getItem("firstNameUser")} a réservé un vélo à la station ${sessionStorage.getItem("choiceStation")}.`);
-//             countdown.text(`Votre réservation expirera dans ${Math.floor((time / 1000 / 60) % 60)} ${sessionStorage.getItem("wordMinutes")} et ${Math.floor((time / 1000) % 60)} ${sessionStorage.getItem("wordSecondes")}.`);
-// console.log("jjjj");
-
-
-//         }else if ( time < 0 ) {
-// console.log("ok");
-
-//             clearInterval(this.callCountdown)
-//             reservationText.text("Votre réservation a éxpirée.");
-//             countdown.hide();
-//             sessionStorage.clear();
-//             cancel.css("display", "none");
-//             buttonStation.prop("disabled", true);
-//         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     callCountdown () {
-//         let reservationText = $("#stationReserved");
-//         let countdown = $("#countdown");
-//         let cancel = $("#cancelReservation");
-//         let buttonStation = $("#submitButton");
-//         let time = sessionStorage.getItem("t");
-// console.log(time);
-
-
-//         if (time > 0) {
-//             let ti = setInterval(this.callCountdown, 1000);
-//     console.log(ti);
-//             reservationText.text(`${sessionStorage.getItem("nameUser")} ${sessionStorage.getItem("firstNameUser")} a réservé un vélo à la station ${sessionStorage.getItem("choiceStation")}.`);
-//             countdown.text(`Votre réservation expirera dans ${Math.floor((time / 1000 / 60) % 60)} ${sessionStorage.getItem("wordMinutes")} et ${Math.floor((time / 1000) % 60)} ${sessionStorage.getItem("wordSecondes")}.`);
-//             cancel.css("display", "block");
-//             buttonStation.prop("disabled", true);
-//             reservation.callCancel(ti);
-//         }else if ((time < 0) || (time === "NaN")) {
-//             clearInterval(this.callCountdown);
-//             reservationText.text("Votre réservation a éxpirée.");
-//             countdown.hide();
-//             sessionStorage.clear();
-//             cancel.css("display", "none");
-//             buttonStation.prop("disabled", false);
-//         }
-
-//         if (time === "NaN") {
-//             countdown.hide();
-//         }
-//     }
-
-
-// let form = $("#form");
-
-// function submitForm () {
-
-// }
-
-// form.submit(submitForm);
-
-
-
-
-// class Reservation {
-//     constructor () {
-//         this.nameUser = $("#nameUser"),
-//         this.firstNameUser = $("#firstName"),
-//         this.message = $("#message"),
-//         this.info = $("#info"),
-//         this.canvas = $("#canvas"),
-//         this.stationReserved = $("#stationReserved"),
-//         this.countdown = $("#countdown"),
-//         this.cancel = $("#cancelReservation"),
-//         this.reservation = $("#reservation"),
-//         this.buttonStation = $("#reserve"),
-//         this.form = $("#form"),
-//         this.regexSaisie = /\d/
-//     }
-
-//     init () {
-//         this.nameUser.blur(this.checkSeizure.bind(this));
-//         this.firstNameUser.blur(this.checkSeizure.bind(this));
-//         this.form.submit(this.submitForm);
-//     }
-
-//     checkSeizure (e) {
-//         //let seizure = e.target.value;
-//         if ((this.regexSaisie.test(e.target.value)) || (e.target.value.length < 2)) {
-//             this.message.text( "Votre nom et votre prénom doivent contenir au moins une lettre et ne peuvent pas contenir de chiffre.");
-//             this.nameUser.val("");
-//             this.firstNameUser.val("");
-//         } else {
-//             this.buttonStation.prop("disabled", false);
-//         }
-//     }
-
-//     getTimeRemaining(endtime) {
-//         let t = Date.parse(endtime) - Date.parse(new Date());
-
-//         let secondes = Math.floor((t / 1000) % 60);
-//         let minutes = Math.floor((t / 1000 / 60) % 60);
-//         sessionStorage.setItem("t" , Date.parse(endtime) - Date.parse(new Date()));
-//         sessionStorage.setItem("secondes", Math.floor((t / 1000) % 60));
-//         sessionStorage.setItem("minutes",  Math.floor((t / 1000 / 60) % 60));
-
-//         return {
-//             t,
-//             minutes,
-//             secondes
-//         };
-//     }
-
-
-//     updateClock() {
-//         let t = getTimeRemaining(endtime);
-
-//         let wordMinutes = ((t.minutes === 1) || (t.minutes === 0)) ? "minute" : "minutes";
-//         let wordSecondes = ((t.secondes === 1) || (t.secondes === 0)) ? "seconde" : "secondes";
-//         sessionStorage.setItem("wordMinutes", ((sessionStorage.getItem("minutes") === 1) || (sessionStorage.getItem("minutes") === 0)) ? "minute" : "minutes");
-//         sessionStorage.setItem("wordSecondes", ((sessionStorage.getItem("secondes") === 1) || (sessionStorage.getItem("secondes") === 0)) ? "seconde" : "secondes");
-//         sessionStorage.setItem("t", t.t);
-
-
-//         if(t.t === 0) {
-//             clearInterval(timeInterval);
-//             stationReserved.text("Votre réservation a éxpirée.");
-//             countdown.hide();
-//             sessionStorage.removeItem("choiceStation");
-//             cancelReservation.css("display", "none");
-//             buttonStation.disabled = false;
-//             } else {
-//                 countdown.show();
-//                 let secStorage = sessionStorage.getItem("secondes");
-//                 let minStorage = sessionStorage.getItem("minutes");
-//                 countdown.text(`Votre réservation expirera dans ${minStorage} ${wordMinutes} et ${secStorage} ${wordSecondes}.`);
-//             }
-
-
-//         countdown.text(`Votre réservation expirera dans ${t.minutes} ${wordMinutes} et ${t.secondes} ${wordSecondes}.`);
-//     }
-
-//     clockInitialize(id, endtime) {
-//         // let clock = document.getElementById(id); // Essayer en mettant du jQuery
-//         // let endtime = sessionStorage.getItem("deadline");
-//         this.updateClock(); // run function once at first to avoid delay (éxécuter une fois pour éviter les retards).
-//         let timeInterval = setInterval(updateClock,1000);
-//         cancelReservation.css("display", "block");
-//         buttonStation.prop("disabled", true);
-//         this.callCancel(timeInterval);
-//     }
-
-//     submitForm(e) {
-//         e.preventDefault();
-//         let seizureNameUser = $("#nameUser").val();
-//         let seizureFirstNameUser =  $("#firstName").val();
-//         let choiceStation = $("#nameStation").text();
-//         let stationReserved = $("#stationReserved");
-//         let currentTime = Date.parse(new Date());
-//         let timeInMinutes = 1;
-//         let deadline = new Date(currentTime + timeInMinutes * 60 * 1000);
-//         sessionStorage.setItem("nameUser", seizureNameUser);
-//         sessionStorage.setItem("firstNameUser", seizureFirstNameUser);
-//         sessionStorage.setItem("choiceStation", choiceStation);
-//         sessionStorage.setItem("deadline", new Date(currentTime + timeInMinutes * 60 * 1000));
-//         let nameStocked = sessionStorage.getItem("nameUser");
-//         let firstNameStocked = sessionStorage.getItem("firstNameUser");
-//         let stationStocked = sessionStorage.getItem("choiceStation");
-//         let deadlineStorage = sessionStorage.getItem("deadline");
-//         console.log(deadlineStorage);
-
-//         stationReserved.text(`${nameStocked} ${firstNameStocked} a réservé un vélo à la station ${stationStocked}.`);
-//         this.clockInitialize(this.reservation, deadline).bind(this);
-//     }
-
-//     callCancel (interval) {
-//         this.cancelReservation.click(function () {
-//         clearInterval(interval);
-//         sessionStorage.clear();
-//         this.stationReserved.text("Vous avez annuler votre réservation.");
-//         this.countdown.hide();
-//         this.cancelReservation.css("display", "none");
-//         })
-//     }
-
-//     callCountdown () {
-//         if (this.time > 0) {
-//             this.stationReserved.text(`${this.nameStorage} ${this.firstNameStorage} a réservé un vélo à la station ${this.stationStorage}.`);
-//             this.countdown.text(`Votre réservation expirera dans ${this.minutesTime} ${this.wordMinutesStorage} et ${this.secondesTime} ${this.wordSecondesStorage}.`);
-//             let ti = setInterval(this.callCountdown, 1000);
-//             this.cancelReservation.css("display", "block");
-//             this.buttonStation.disabled =  true;
-//             callCancel(ti);
-
-//         }else if (this.time < 0) {
-//             clearInterval(this.callCountdown);
-//             this.stationReserved.text("Votre réservation a éxpirée.");
-//             this.countdown.hide();
-//             this.sessionStorage.clear();
-//             this.cancelReservation.css("display", "none");
-//             this.buttonStation.disabled = false;
-//         }
-
-//     }
-
-
-// }
-
