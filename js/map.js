@@ -1,17 +1,17 @@
 class Map {
     constructor () {
-        this.mymap = L.map('mapid').setView([43.600247, 1.444700], 13),
-        this.apiJcdecaux  = "https://api.jcdecaux.com/vls/v1/stations?contract=toulouse&apiKey=18e9df72cf97bc3cc6bafec0bfdd7ba2e461c99f",
-        this.nameStation = $("#nameStation"),
-        this.stateStation = $("#state"),
-        this.adressStation = $("#adress"),
-        this.placesStation = $("#places"),
-        this.bikesStation = $("#bikes"),
-        this.buttonStation = $("#submitButton"),
-        this.info = $("#info"),
-        this.nameUser = $("#nameUser"),
-        this.firstNameUser = $("#firstName"),
-        this.message = $("#message")
+        this.mymap = L.map('mapid').setView([43.600247, 1.444700], 13);
+        this.apiJcdecaux  = "https://api.jcdecaux.com/vls/v1/stations?contract=toulouse&apiKey=18e9df72cf97bc3cc6bafec0bfdd7ba2e461c99f";
+        this.nameStation = $("#nameStation");
+        this.stateStation = $("#state");
+        this.adressStation = $("#adress");
+        this.placesStation = $("#places");
+        this.bikesStation = $("#bikes");
+        this.buttonStation = $("#submitButton");
+        this.info = $("#info");
+        this.nameUser = $("#nameUser");
+        this.firstNameUser = $("#firstName");
+        this.message = $("#message");
     };
     
 
@@ -46,14 +46,11 @@ class Map {
     clickMarker (event) {
         //Récupère la station depuis event (faire un console.log pour voir event)
         let station = event.target.options.station;
-
+        let message = $("#message");
         let nameUser = $("#nameUser");
         let firstNameUser = $("#firstName");
         let bikes = $("#bikes");
         bikes.text(station.available_bikes);
-        let message = $("#message");
-        message.text();
-
         //Mise à jour des informations de la station
         $("#nameStation").text(station.name.split("-").pop());
         $("#state").text(station.status);
@@ -66,7 +63,7 @@ class Map {
             nameUser.prop("disabled", true);
             firstNameUser.prop("disabled", true);
         } else {
-            message.text("");
+            message.text("Veuillez renseigner votre nom et votre prénom.");
             nameUser.prop("disabled", false);
             firstNameUser.prop("disabled", false);
         }

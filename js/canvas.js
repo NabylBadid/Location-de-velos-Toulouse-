@@ -1,80 +1,136 @@
 class Canvas {
     constructor () {
-        this.canvas = $("#canvas"),
-        this.context = $("canvas")[0].getContext("2d"),
-        this.paint = null,
-        this.clickX = new Array(),
-        this.clickY = new Array(),
-        this.clickDrag = new Array()        
+        this.canvas = $("#canvas");
+        this.context = this.canvas[0].getContext("2d");
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.window = $(window);
+        this.fieldset = $("#info");
+        this.clearCanvas = $("#clearCanvas");
+        this.buttonStation = $("#submitButton");
+        this.messageCanvas = $("#messageCanvas");
+
+        this.paint = false;
+        this.painted = false;
+        this.finger = false;
+        this.startX = 0;
+        this.startY = 0;  
+        this.color = "#d90075";
     };
 
     init () {
-        this.canvas.mousedown(this.mouseEvent.bind(this));
-        this.canvas.mousemove(this.mouseMovement.bind(this));
-        this.canvas.mouseup(this.mouseTopMovementOrExit.bind(this));
-        this.canvas.mouseleave(this.mouseTopMovementOrExit.bind(this));
-        // this.canvas.touchstart(this.mouseEvent.bind(this));
-        // this.canvas.touchmove(this.mouseMovement.bind(this));
-        // this.canvas.touchend(this.mouseTopMovementOrExit.bind(this));
-        // this.canvas.touchcancel(this.mouseTopMovementOrExit.bind(this));
-        // this.addClick();
-        // this.redraw(); 
+        this.canvas.mousedown(this.mouseDown.bind(this));
+        this.canvas.mousemove(this.draw.bind(this));
+        this.canvas.mouseup(this.mouseUpOrExit.bind(this));
+        this.canvas.mouseleave(this.mouseUpOrExit.bind(this));
+        this.canvas.click(this.displaySubmit.bind(this));
+
+        this.canvas.on("touchstart", this.mouseDown.bind(this));
+        this.canvas.on("touchmove", this.draw.bind(this));
+        this.canvas.on("touchend", this.mouseUpOrExit.bind(this));
+        this.canvas.on("touchend", this.displaySubmit.bind(this));
+        this.canvas.on("touchleave",this.mouseUpOrExit.bind(this)); // Toucheleave a été proposer mais ne fonctionne pas 
+
+        this.calibrate();
+        this.clearCanvas.click(this.clear.bind(this));
+        this.window.resize(this.calibrate.bind(this));    
     }
 
-    mouseEvent (e) {
-        let mouseX = e.pageX - this.offsetLeft;
-        let mouseY = e.page - this.offsetTop;
+    // au mousedown on enregistre la position du click (addClick) et on dessine (redraw)
+    mouseDown (e) {
+        if (e.clientX ==  undefined) {
+            this.startX = e.touches[0].pageX - this.canvas[0].getBoundingClientRect().left;
+            this.startY = e.touches[0].pageY - this.canvas[0].getBoundingClientRect().top - (e.touches[0].pageY - e.touches[0].clientY);
+                
+            this.finger = true;
+        } else {
+            this.startX = e.offsetX; // On peut utiliser e.clientX - this.canvas[0].getBoundingClientRect().left
+            this.startY = e.offsetY; // On peut utiliser e.clientY - this.canvas[0].getBoundingClientRect().top  
+        }
 
         this.paint = true;
-        this.addClick(mouseX, mouseY);
-        this.redraw();
-    }
-
-    mouseMovement (e) {
-        if(this.paint) {
-            this.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-            this.redraw();
-        } 
+        this.draw(e);          
     }
 
     // Top movement = si le marqueur est décliquer Exit = si le marquer sort du cadre
-    mouseTopMovementOrExit (e) {
+    mouseUpOrExit () {        
         this.paint = false;
+        this.finger = false;
     }
+    
+    draw (e) {
+        this.context.strokeStyle = "#d90075"; // fillStyle : Définit ou renvoie la couleur, le dégradé ou le modèle utilisé pour remplir le dessin
+        this.context.lineCap = "round"; // lineCap : Définit la forme du dernier point de la ligne
+        this.context.lineJoin = "round"; // lineJoin
+        this.context.lineWidth = 8;
+        // if (!this.paint) return, else {le code ci-dessous} equivaut à ce qu'il y a en dessous mais avce une manière de pensée inversée.
+        if (this.paint) {
+            let mouseX;
+            let mouseY;
+            if(e.clientX == undefined) {    
+                e.preventDefault();
+                mouseX = e.touches[0].pageX - this.canvas[0].getBoundingClientRect().left;
+                mouseY = e.touches[0].pageY - this.canvas[0].getBoundingClientRect().top - (e.touches[0].pageY - e.touches[0].clientY);
 
-    // Enregistre la position du clique
-    addClick (x, y, dragging) { // Draggin = gliser
-        this.clickX.push(x);
-        this.clickY.push(y);
-        this.clickDrag.push(dragging);        
-    }
-
-    // Dessiner le trait fait par l'utilisateur et definir les caratéristiques du marqueuer (couleur, taille)
-    redraw () {
-
-console.log(this.canvas.width());
-console.log(this.canvas.height());
-
-        this.context.clearRect (0, 0, 298 , 198); //
-
-        this.context.strokeStyle = "#df4b26";
-        this.context.lineJoin = "round";
-        this.context.lineWidth = 10;
-
-        for (let i = 0; i < this.clickX.length; i++) {
-            this.context.beginPath ();
-            if (this.clickDrag[i] && i) {
-                this.context.moveTo(this.clickX[i-1], this.clickY [i-1]);
+                this.finger = true;
             } else {
-                this.context.moveTo(this.clickX[i] -1, this.clickY[i]);
+                mouseX = e.offsetX;
+                mouseY = e.offsetY; 
             }
-            
-            this.context.lineTo(this.clickX[i], this.clickY[i]);
-            this.context.closePath();
-            this.context.stroke();
-        }
+        this.context.beginPath();
+        this.context.moveTo(this.startX, this.startY);
+        this.context.lineTo(mouseX, mouseY);
+        this.context.closePath();
+        this.context.stroke();
+        this.startX = mouseX;
+        this.startY = mouseY;
+
+        this.painted = true;
+        }        
+    }  
+
+    // Ajuste la width du canvas par rapport au fieldset
+    calibrate () {
+        this.canvas[0].width = this.fieldset.width();
+    }
+
+    clear () {
+        this.context.clearRect(0, 0, this.canvas[0].width, this.canvas[0].height);
+        this.buttonStation.prop("disabled", true);
+        this.messageCanvas.text("Veuillez signer votre réservation.");
+        this.painted = false;
+    }
+
+    displaySubmit () {
+console.log(this.painted);
+        if(this.painted) {
+            this.messageCanvas.text("");
+            this.buttonStation.prop("disabled", false);
+        } 
     }
 }
+
+
+        // Gestion des évènements de la souris
+        // this.canvas.addEventListener('mousedown', (e) => {
+        //     this.startX = e.clientX - this.canvas.getBoundingClientRect().left;
+        //     this.startY = e.clientY - this.canvas.getBoundingClientRect().top;
+        //     this.drawing = true;
+        // }, false);
+        // this.canvas.addEventListener('mouseup', () => {
+        //     this.ctx.closePath();
+        //     this.drawing = false;
+        // }, false);
+        // this.canvas.addEventListener('mousemove', (e) => {
+        //     e.preventDefault();
+        //     this.draw(e);
+        // }, false);
+
+
+
+
+
+
 
 
 // let canvas = $("#canvasDiv");

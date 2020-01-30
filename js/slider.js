@@ -1,15 +1,15 @@
 class Slider {
 	constructor () {
 		this.i = 0,
-		this.images = ["images/img12.jpg", "images/carte.jpg", "images/station.jpg", "images/locataire.jpg", "images/reservation.jpg"],
-		this.temps = 5000,
-		this.interval = null,
-		this.bPause = $("#bPause"),
-		this.etatSlide = false,
-		this.bGauche = $("#flecheG"),
-        this.bDroite = $("#flecheD"),
-        this.document = $(document),
-        this.slide = document.slide
+		this.images = ["images/img12.jpg", "images/carte.jpg", "images/station.jpg", "images/locataire.jpg", "images/reservation.jpg"];
+		this.temps = 5000;
+		this.interval = null;
+		this.bPause = $("#bPause");
+		this.etatSlide = false;
+		this.bGauche = $("#flecheG");
+        this.bDroite = $("#flecheD");
+        this.document = $(document);
+        this.slide = document.slide;
         };
     
     init () {

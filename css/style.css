@@ -130,6 +130,12 @@ h2 a:hover {
 	background-color: #d90075;
 	border-color: #d90075;
 }
+#clearCanvas {
+	box-sizing:  content-box;
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+}
 
 
 /* Map + Station */
@@ -140,8 +146,9 @@ h2 a:hover {
 /* Carte */
 #mapid {
 	box-shadow: 1px 1px 12px #555;
-	min-width: 300px;
 	min-height: 300px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /* Marqeurs */
@@ -213,15 +220,19 @@ label, legend {
 }
 
 /* Signature */
+#canvasDiv {
+	pointer-events: none; /* Empecher le click */
+}
 #canvas {
-	height: 200px;
-	width: 300px;
 	margin-right: auto;
 	margin-left: auto;
 	border: 1px solid black;
-	display: block;
 	margin-bottom: 20px;
-} 
+	touch-action: none;
+}
+#clearCanvas {
+	display: none;
+}
 
 /* Reservation */
 
@@ -241,3 +252,9 @@ label, legend {
 #cancelReservation {
 	display: none;
 }
+
+@media screen and (max-width: 460px) {
+		body {
+			padding: 10px;
+		}
+	}
