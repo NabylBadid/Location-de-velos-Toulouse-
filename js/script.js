@@ -332,3 +332,24 @@ document.addEventListener("keydown", appuyer);
 // nameUser.blur(checkSeizure);
 // firstNameUser.blur(checkSeizure);
 // form.addEventListener("submit", submitForm);
+
+
+
+// canvas 
+
+// code laurent 
+
+        // Gestion des évènements de la souris
+        // this.canvas.addEventListener('mousedown', (e) => {
+        //     this.startX = e.clientX - this.canvas.getBoundingClientRect().left;
+        //     this.startY = e.clientY - this.canvas.getBoundingClientRect().top;
+        //     this.drawing = true;
+        // }, false);
+        // this.canvas.addEventListener('mouseup', () => {
+        //     this.ctx.closePath();
+        //     this.drawing = false;
+        // }, false);
+        // this.canvas.addEventListener('mousemove', (e) => {
+        //     e.preventDefault();
+        //     this.draw(e);
+        // }, false);

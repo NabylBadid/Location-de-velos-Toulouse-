@@ -9,7 +9,7 @@ class Slider {
 		this.bGauche = $("#flecheG");
         this.bDroite = $("#flecheD");
         this.document = $(document);
-        this.slide = document.slide;
+        this.slide = document.getElementById("imgSlider");
         };
     
     init () {
@@ -21,6 +21,7 @@ class Slider {
         this.document.keydown(this.press.bind(this));
     }
 
+    // Change l'image
     changeImg () {
         if (this.i < this.images.length - 1) {
             this.i++;
@@ -30,7 +31,6 @@ class Slider {
         this.changeImgSrc(this.i);
     }
 
-    // Bouton Pause
     stop () {
         clearInterval(this.interval);
         this.bPause.text("Jouer");
@@ -41,6 +41,7 @@ class Slider {
         this.bPause.text("Pause");
     }
 
+    // Méthode qui met en pause ou active le diapo
     changeState () {
         if (this.etatSlide) {
             this.stop();
@@ -52,6 +53,7 @@ class Slider {
         }        
     }
 
+    // Change la référence de l'image (src)
     changeImgSrc(number) {
         this.slide.src = this.images[number];
     }

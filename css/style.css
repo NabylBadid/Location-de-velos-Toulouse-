@@ -29,7 +29,6 @@ h1:after {
 	top: 2px;
   }
 h1:after {
-	/*background: url(https://subtlepatterns.com/patterns/crossed_stripes.png) repeat;*/
 	background-image: -webkit-linear-gradient(left top, transparent 0%, transparent 25%, #555 25%, #555 50%, transparent 50%, transparent 75%, #555 75%);
 	background-size: 4px 4px;
 	-webkit-background-clip: text;
@@ -45,7 +44,6 @@ h2 {
 	margin: 10px 0 0 0; padding: 25px 10px;
 	border-top: 4px double #AAA;
 	border-bottom: 4px double #AAA;
-	/*position: relative;*/
 	text-align: center;
 	margin-top: 20px;
   }
@@ -53,9 +51,6 @@ h2 {
 	display: inline-block;
 	margin: 0 10px;
 	position: relative;
-	/*-webkit-transform: skewy(-3deg);*/
-	-webkit-backface-visibility: hidden;
-	-webkit-transition: 200ms all;
   }
 h2 a {
 	text-transform: uppercase;
@@ -105,7 +100,6 @@ h2 a:hover {
 	margin-top: 30px;
 }
 #diapo {
-	/* width: 600px; */
 	margin-top: 20px;
 }
 #bDiapo {
@@ -128,7 +122,6 @@ h2 a:hover {
 /* Buttons */
 .btn.btn-danger, .btn.btn-danger, .btn.btn-danger:hover, .btn.btn-danger:active, .btn.btn-danger:visited  {
 	background-color: #d90075;
-	border-color: #d90075;
 }
 #clearCanvas {
 	box-sizing:  content-box;
@@ -154,7 +147,6 @@ h2 a:hover {
 /* Marqeurs */
 .leaflet-marker-icon {
 	background-color : rgba(255, 255, 255, 0);
-	box-shadow: rgba(255, 255, 255, 0);
 }
 
 /* Tableau */
@@ -171,7 +163,6 @@ form{
 	border: 1px solid rgb(236, 223, 223);
 	background-color: #EDEDED;
 	padding: 10px 20px;
-	/*margin: 10px auto;*/
 	margin-right: 0px;
 	padding: 20px;
 	font-family: Georgia, "Times New Roman", Times, serif;
@@ -192,15 +183,12 @@ form input {
 	padding: 10px;
 	width: 100%;
 	box-sizing: border-box; 
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box; 
 	background-color: #e8eeef;
 	color:#8a97a0;
-	-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
 	box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
 	margin-bottom: 30px;
 }
-label, legend {
+.underline, legend {
 	text-decoration: underline;
 }
 .number, .letter {

@@ -9,17 +9,17 @@ class Map {
         this.bikesStation = $("#bikes");
         this.buttonStation = $("#submitButton");
         this.info = $("#info");
-        this.nameUser = $("#nameUser");
-        this.firstNameUser = $("#firstName");
+        this.nameUser = $("#nom");
+        this.firstNameUser = $("#prénom");
         this.message = $("#message");
     };
-    
 
     init () {
         this.initMap();
         this.returnStation();
     }
 
+    // Appel l'affichage de la map
     initMap () {
         let tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             maxZoom: 18,
@@ -29,9 +29,9 @@ class Map {
         tileLayer.addTo(this.mymap);
     }
 
-
+    // Renvoie les données de la station
     returnStation () {
-            $.getJSON(this.apiJcdecaux, (data) => {
+        $.getJSON(this.apiJcdecaux, (data) => {
             $.each(data, (i) => {
             let station = data[i];
             // on stocke dans station toutes les infos et fonction d'appel au click
@@ -42,13 +42,13 @@ class Map {
         });
     }
     
-
+    // Affiche, au clique, les informations liées à la station
     clickMarker (event) {
         //Récupère la station depuis event (faire un console.log pour voir event)
         let station = event.target.options.station;
         let message = $("#message");
-        let nameUser = $("#nameUser");
-        let firstNameUser = $("#firstName");
+        let nameUser = $("#nom");
+        let firstNameUser = $("#prénom");
         let bikes = $("#bikes");
         bikes.text(station.available_bikes);
         //Mise à jour des informations de la station
@@ -66,6 +66,6 @@ class Map {
             message.text("Veuillez renseigner votre nom et votre prénom.");
             nameUser.prop("disabled", false);
             firstNameUser.prop("disabled", false);
-        }
+        }    
     }
 }

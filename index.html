@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:og="http://ogp.me/ns#">
+<html lang="fr">
    <head>
       <meta charset="utf-8" />
       <title>Location de vélos à toulouse</title>
@@ -11,6 +11,7 @@
       <meta property="og:description" content="Choissez une station,entrez vos coordonnées,réservez et le tour est joué ! Louez un vélo à toulouse et ses alentours en seulement quelques cliques !" />
       <meta property="og:locale" content="fr_FR" />
       <meta name=viewport content="width=device-width, initial-scale=1">
+      <link rel="icon" type="image/png" href="images/location.png" />
       <link rel="stylesheet" type="text/css" href="css/style.css" />
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /><!--COURS AJOUT BOOTSTRAP-->
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
@@ -28,10 +29,10 @@
    </head>
    <body>
       <h1 class="container-fluid">LOC'<span id="bikeTitle">VELO </span> TOULOUSE</h1>
-      <h2 class="container"> <a href="#diapo"><span> Louez votre vélo en un rien de temps !</span></a></h1>
+      <h2 class="container"> <a href="#diapo"><span> Louez votre vélo en un rien de temps !</span></a></h2>
       <div id="diapo" class="container">
          <div class="text-center">
-            <img name="slide" class="img-responsive" id="imgSlider">
+            <img class="img-responsive" id="imgSlider" alt="images diaporama">
          </div>
       </div>
       <div class="container">
@@ -45,27 +46,27 @@
       <div class="container" id="mapStation">
          <div class="row">
             <div id="mapid" class="col-md-7 col-xs-12"></div>
-               <form action="" method="get" id="form" class="container col-md-4">
+               <form method="get" id="form" class="container col-md-4">
                   <fieldset>
                      <legend><span class="number">1</span>Détails de la station</legend>
                      <div class="form-group">
-                        <label for="name" class="underline">Nom :</label>
+                        <span class="underline">Nom :</span>
                         <span id="nameStation"></span>
                      </div>
                      <div class="form-group">  
-                        <label for="state" class="underline">Statut :</label>
+                        <span class="underline">Statut :</span>
                         <span id="state"></span>
                      </div>
                      <div class="form-group">
-                        <label for="adress" class="underline">Adresse :</label>
+                        <span class="underline">Adresse :</span>
                         <span id="adress"></span>
                      </div>
                      <div class="form-group">
-                        <label for="places" class="underline">Places disponibles :</label>
+                        <span class="underline">Places disponibles :</span>
                         <span id="places"></span>
                      </div>
                      <div class="form-group">
-                        <label for="bikes" class="underline">Vélos disponibles :</label>
+                        <span class="underline">Vélos disponibles :</span>
                         <span id="bikes"></span>
                      </div>
                   </fieldset>
@@ -73,11 +74,11 @@
                      <legend><span class="number">2</span>Informations locataire</legend>
                      <div id="lastName" class="form-group">
                         <label for="nom" class="underline control-label">Nom :</label>
-                        <input type="text" name="nom" id="nameUser" class="form-control" required disabled/>
+                        <input type="text" name="nom" id="nom" class="form-control" required disabled/>
                      </div>
                      <div id="firstNameUser" class="form-group">
                         <label for="prénom" class="underline">Prénom :</label>
-                        <input type="text" name="prénom" id="firstName" class="form-control" required disabled/>
+                        <input type="text" name="prénom" id="prénom" class="form-control" required disabled/>
                      </div>
                         <p id="message">Vous devez séléctionner une station avant de pouvoir réserver.</p>
                         <!-- <p id="canvas"></p> -->
@@ -93,10 +94,6 @@
                </form>
             </div>
          </div>      
-
-
-      <!-- TEST-->
-      <!--<div class="countdown-wrap">-->
          <div id="reservation" class="container">
             <div id="infosStation" class="col-md-8">
                <h3><span class="letter">i</span>Informations sur la réservation</h3>
@@ -105,8 +102,7 @@
             </div>
             <div id="cancel" class="col-md-4">
                <button type="button" class="btn btn-danger" id="cancelReservation">Annuler</button>
-            </div>
-            
+            </div>         
          </div>
       <!-- test -->
       <!--Description de la station (Nom , status...)--> 
