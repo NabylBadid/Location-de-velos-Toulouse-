@@ -1,5 +1,9 @@
-# P3---LOC-VELO-TOULOUSE
-Repository du 3ème projet de la formation DWJ d'openclassrooms
+# Location de vélos à Toulouse
 
-Le répertoire "P3---LOC'VELO TOULOUSE" contient tous les fichiers du 3ème projet de la formation d'openclassrooms devéloppeur web junior
-terminés et complétés, rien n'a y modifié.
+Carte interactive de locations de vélos à Toulouse.
+Projet codé en Javascript et jQuery, code écrit en orienté objet.
+Utilisation de différentes APIs : - L'API Web storage, l'API HTML5 Canvas et l'API de cartographie leaflet.
+
+Le répertoire "Location de velos Toulouse" contient tous les fichiers du 3ème projet de la formation d'openclassrooms devéloppeur web junior.
+
+URL : http://locvelotoulouse.webagencyp.com/
